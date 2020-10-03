@@ -144,11 +144,21 @@ public class Board extends JPanel implements ActionListener {
 //        ghost_y = new int[MAX_GHOSTS];
 //        ghost_dy = new int[MAX_GHOSTS];
 //        ghostSpeed = new int[MAX_GHOSTS];
-        Random r = new Random();
-        DOT_X = r.nextInt(15) * 24;
-        DOT_Y = r.nextInt(15) * 24;
         dx = new int[4];
         dy = new int[4];
+
+        int x, y;
+
+        Random r = new Random();
+
+        do{
+            x = r.nextInt(15);
+            y = r.nextInt(15);
+        }while(blocksData[x+15*y-1]==0);
+        DOT_X = x*24;
+        DOT_Y = y*24;
+
+        levelData[x+15*y-1] +=16;
 
         timer = new Timer(40, this);
         timer.start();
@@ -177,17 +187,17 @@ public class Board extends JPanel implements ActionListener {
 
     private void playGame(Graphics2D g2d) {
 
-        if (dying) {
-
-            death();
-
-        } else {
+//        if (dying) {
+//
+//            death();
+//
+//        } else {
 
             movePacman();
             drawPacman(g2d);
 //            moveGhosts(g2d);
             checkMaze();
-        }
+//        }
     }
 
     private void showIntroScreen(Graphics2D g2d) {
@@ -476,12 +486,6 @@ public class Board extends JPanel implements ActionListener {
         short i = 0;
         int x, y;
 
-//        if ((screenData[i] & 16) != 0) {
-//        if ((screenData[i]) != 0) {
-            g2d.setColor(dotColor);
-            g2d.fillRect(DOT_X+11, DOT_Y+11, 2, 2);
-//        }
-
         for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
             for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
 
@@ -506,10 +510,10 @@ public class Board extends JPanel implements ActionListener {
                             y + BLOCK_SIZE - 1);
                 }
 
-//                if ((screenData[i] & 16) != 0) {
-//                    g2d.setColor(dotColor);
-//                    g2d.fillRect(x + 11, y + 11, 2, 2);
-//                }
+                if ((screenData[i] & 16) != 0) {
+                    g2d.setColor(dotColor);
+                    g2d.fillRect(DOT_X + 11, DOT_Y + 11, 2, 2);
+                }
 
                 i++;
             }
@@ -529,11 +533,12 @@ public class Board extends JPanel implements ActionListener {
     private void initLevel() {
 
         int i;
+
         for (i = 0; i < N_BLOCKS * N_BLOCKS; i++) {
             screenData[i] = levelData[i];
         }
 
-        continueLevel();
+//        continueLevel();
     }
 
     private void continueLevel() {
