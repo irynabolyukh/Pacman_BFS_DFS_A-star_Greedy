@@ -197,6 +197,17 @@ public class Board extends JPanel implements ActionListener {
             drawPacman(g2d);
 //            moveGhosts(g2d);
             checkMaze();
+
+        moveRight();
+        drawPacman(g2d);
+        moveRight();
+        drawPacman(g2d);
+        moveRight();
+        drawPacman(g2d);
+        inGame = false;
+
+
+
 //        }
     }
 
@@ -257,20 +268,20 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
-        if (finished) {
-
-            score += 50;
-
-//            if (N_GHOSTS < MAX_GHOSTS) {
-//                N_GHOSTS++;
+//        if (finished) {
+//
+//            score += 50;
+//
+////            if (N_GHOSTS < MAX_GHOSTS) {
+////                N_GHOSTS++;
+////            }
+//
+//            if (currentSpeed < maxSpeed) {
+//                currentSpeed++;
 //            }
-
-            if (currentSpeed < maxSpeed) {
-                currentSpeed++;
-            }
-
-            initLevel();
-        }
+//
+//            initLevel();
+//        }
     }
 
 //    private void death() {
