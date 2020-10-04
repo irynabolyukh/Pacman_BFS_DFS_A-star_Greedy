@@ -22,6 +22,8 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
+    PathSearcher searcher;
+
     private Dimension d;
     private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
 
@@ -138,6 +140,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void initVariables() {
 
+
         screenData = new short[N_BLOCKS][N_BLOCKS];
         mazeColor = new Color(5, 100, 5);
         d = new Dimension(400, 400);
@@ -162,6 +165,13 @@ public class Board extends JPanel implements ActionListener {
         DOT_Y = y*24;
 
         levelData[y][x] +=16;
+
+        searcher = new PathSearcherDFS();
+        for (int i = 0; i < N_BLOCKS; i++) {
+            for(int j =0; j<N_BLOCKS; j++){
+                searcher.screenData[i][j] = levelData[i][j];
+            }
+        }
 
         timer = new Timer(40, this);
         timer.start();
@@ -371,7 +381,6 @@ public class Board extends JPanel implements ActionListener {
     }
     private void moveRight(){
         isGoalReached();
-        canMoveRight();
         if(canMoveRight()){
             pacman_x +=24;
             view_dx = 1;
