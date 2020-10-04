@@ -367,30 +367,22 @@ public class Board extends JPanel implements ActionListener {
     private void moveLeft(){
         pacman_x -=24;
         pacman_y += 0;
-//        pacman_x = pacman_x + PACMAN_SPEED * pacmand_x;
-//        pacman_y = pacman_y + PACMAN_SPEED * pacmand_y;
         view_dx = -1;
     }
 
     private void moveRight(){
         pacman_x +=24;
         pacman_y += 0;
-//        pacman_x = pacman_x + PACMAN_SPEED * pacmand_x;
-//        pacman_y = pacman_y + PACMAN_SPEED * pacmand_y;
         view_dx = 1;
     }
     private void moveUp(){
         pacman_x += 0;
-        pacman_y += 24;
-//        pacman_x = pacman_x + PACMAN_SPEED * pacmand_x;
-//        pacman_y = pacman_y + PACMAN_SPEED * pacmand_y;
+        pacman_y -=24;
         view_dy = -1;
     }
     private void moveDown(){
         pacman_x += 0;
-        pacman_y -= 24;
-//        pacman_x = pacman_x + PACMAN_SPEED * pacmand_x;
-//        pacman_y = pacman_y + PACMAN_SPEED * pacmand_y;
+        pacman_y += 24;
         view_dy = 1;
     }
 
