@@ -1,10 +1,10 @@
 package com.zetcode;
 
-public class Point {
+class MyPoint {
     int x,y;
     Direction d;
 
-    public Point(int x, int y, Direction d){
+    public MyPoint(int x, int y, Direction d){
         this.x = x;
         this.y = y;
         this.d = d;
