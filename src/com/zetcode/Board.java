@@ -364,8 +364,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void moveLeft(){
         isGoalReached();
-        canMoveLeft();
-        if(CAN_MOVE){
+        if(canMoveLeft()){
             pacman_x -=24;
             view_dx = -1;
         }
@@ -373,23 +372,21 @@ public class Board extends JPanel implements ActionListener {
     private void moveRight(){
         isGoalReached();
         canMoveRight();
-        if(CAN_MOVE){
+        if(canMoveRight()){
             pacman_x +=24;
             view_dx = 1;
         }
     }
     private void moveUp(){
         isGoalReached();
-        canMoveUp();
-        if(CAN_MOVE){
+        if(canMoveUp()){
             pacman_y -=24;
             view_dy = -1;
         }
     }
     private void moveDown(){
         isGoalReached();
-        canMoveDown();
-        if(CAN_MOVE){
+        if(canMoveDown()){
             pacman_y += 24;
             view_dy = 1;
         }
@@ -410,20 +407,18 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void canMoveLeft(){
+    private boolean canMoveLeft(){
         int pos_i, pos_j;
         short ch;
         pos_i = pacman_x / BLOCK_SIZE;
         pos_j = pacman_y / BLOCK_SIZE;
         ch = screenData[pos_j][pos_i];
-
-            if((ch & 1) != 0){
-                CAN_MOVE = false;
-            }else{
-                CAN_MOVE = true;
-            }
+        if((ch & 1) != 0){
+            return false;
+        }
+        return true;
     }
-    private void canMoveUp(){
+    private boolean canMoveUp(){
         int pos_i, pos_j;
         short ch;
         pos_i = pacman_x / BLOCK_SIZE;
@@ -431,12 +426,11 @@ public class Board extends JPanel implements ActionListener {
         ch = screenData[pos_j][pos_i];
 
         if((ch & 2) != 0){
-            CAN_MOVE = false;
-        }else{
-            CAN_MOVE = true;
+            return false;
         }
+        return true;
     }
-    private void canMoveRight(){
+    private boolean canMoveRight(){
         int pos_i, pos_j;
         short ch;
         pos_i = pacman_x / BLOCK_SIZE;
@@ -444,12 +438,11 @@ public class Board extends JPanel implements ActionListener {
         ch = screenData[pos_j][pos_i];
 
         if((ch & 4) != 0){
-            CAN_MOVE = false;
-        }else{
-            CAN_MOVE = true;
+            return false;
         }
+        return true;
     }
-    private void canMoveDown(){
+    private boolean canMoveDown(){
         int pos_i, pos_j;
         short ch;
         pos_i = pacman_x / BLOCK_SIZE;
@@ -457,10 +450,9 @@ public class Board extends JPanel implements ActionListener {
         ch = screenData[pos_j][pos_i];
 
         if((ch & 8) != 0){
-            CAN_MOVE = false;
-        }else{
-            CAN_MOVE = true;
+            return false;
         }
+        return true;
     }
 //    private void movePacman() {
 //
