@@ -1,15 +1,15 @@
 package com.zetcode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
-
 public class PathSearcherDFS extends PathSearcher{
 
 
     @Override
     public void searchForPath() {
+        for(int i=0; i<15; i++){
+            for(int j=0; j<15;j++){
+                isVisited[i][j] = 0;
+            }
+        }
         solveDFS();
     }
     public void solveDFS() {
@@ -18,10 +18,11 @@ public class PathSearcherDFS extends PathSearcher{
 
         MyPoint crt;   //current node
         MyPoint next;  //next node
+
         while (!path_stack.empty()) {
 
             //get current position
-            crt = path_stack.pop();
+            crt = (MyPoint) path_stack.pop();
             if (isGoalReached(crt)) {
                 break;
             }
@@ -29,25 +30,28 @@ public class PathSearcherDFS extends PathSearcher{
             //to remember all visited
             path.add(crt);
 
+            markVisited(crt);
+
             //put its neighbours in the queue
             next = crt.moveDown();  // go down from the current node
-            if (isInMaze(next) && isClearDown(next)) {
+            if (isInMaze(next) && isClearDown(next) && !isVisited(next)) {
                 path_stack.push(next);
             }
             next = crt.moveRight();    //go right from the current node
-            if (isInMaze(next) && isClearRight(next)) {
+            if (isInMaze(next) && isClearRight(next) && !isVisited(next)) {
                 path_stack.push(next);
             }
             next = crt.moveUp();    // go up
-            if (isInMaze(next) && isClearUp(next)) {
+            if (isInMaze(next) && isClearUp(next) && !isVisited(next)) {
                 path_stack.push(next);
             }
             next = crt.moveLeft();    //go left from the current node
-            if (isInMaze(next) && isClearLeft(next)) {
+            if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
                 path_stack.push(next);
             }
         }
 
     }
+
 
 }
