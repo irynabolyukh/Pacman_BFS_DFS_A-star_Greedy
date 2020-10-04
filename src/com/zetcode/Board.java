@@ -47,6 +47,7 @@ public class Board extends JPanel implements ActionListener {
     private int pacmanAnimPos = 0;
 //    private int N_GHOSTS = 6;
     private int pacsLeft, score;
+    private String gameover;
     private int[] dx, dy;
 //    private int[] ghost_x, ghost_y, ghost_dx, ghost_dy, ghostSpeed;
 
@@ -192,7 +193,7 @@ public class Board extends JPanel implements ActionListener {
 //
 //        } else {
 
-            movePacman();
+//            movePacman();
             drawPacman(g2d);
 //            moveGhosts(g2d);
             checkMaze();
@@ -215,19 +216,29 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
     }
 
-    private void drawScore(Graphics2D g) {
+//    private void drawScore(Graphics2D g) {
+//
+//        int i;
+//        String s;
+//
+//        g.setFont(smallFont);
+//        g.setColor(new Color(96, 128, 255));
+//        s = "Score: " + score;
+//        g.drawString(s, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
+//
+//        for (i = 0; i < pacsLeft; i++) {
+//            g.drawImage(pacman3left, i * 28 + 8, SCREEN_SIZE + 1, this);
+//        }
+//    }
+    private void drawInfo(Graphics2D g) {
 
         int i;
         String s;
 
         g.setFont(smallFont);
         g.setColor(new Color(96, 128, 255));
-        s = "Score: " + score;
-        g.drawString(s, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
-
-        for (i = 0; i < pacsLeft; i++) {
-            g.drawImage(pacman3left, i * 28 + 8, SCREEN_SIZE + 1, this);
-        }
+        gameover = "";
+        g.drawString(gameover, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
     }
 
     private void checkMaze() {
@@ -236,14 +247,13 @@ public class Board extends JPanel implements ActionListener {
         boolean finished = true;
 
         while (finished) {
-            for(short i =0; i< 15; i++){
 
+            for(short i = 0; i< 15; i++){
                 for(short j =0; j< 15; j++){
-                    if ((screenData[i][j] & 48) != 0) {
+                    if ((screenData[i][j] & 16) != 0) {
                         finished = false;
                     }
                 }
-
             }
         }
 
@@ -263,16 +273,16 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void death() {
-
-        pacsLeft--;
-
-        if (pacsLeft == 0) {
-            inGame = false;
-        }
-
-        continueLevel();
-    }
+//    private void death() {
+//
+//        pacsLeft--;
+//
+//        if (pacsLeft == 0) {
+//            inGame = false;
+//        }
+//
+//        continueLevel();
+//    }
 
 //    private void moveGhosts(Graphics2D g2d) {
 //
@@ -352,53 +362,75 @@ public class Board extends JPanel implements ActionListener {
 ////        g2d.drawImage(ghost, x, y, this);
 ////    }
 
-    private void movePacman() {
-
-        int pos_i, pos_j;
-
-        short ch;
-
-        if (req_dx == -pacmand_x && req_dy == -pacmand_y) {
-            pacmand_x = req_dx;
-            pacmand_y = req_dy;
-            view_dx = pacmand_x;
-            view_dy = pacmand_y;
-        }
-
-        if (pacman_x % BLOCK_SIZE == 0 && pacman_y % BLOCK_SIZE == 0) {
-            pos_i = pacman_x / BLOCK_SIZE;
-            pos_j = pacman_y / BLOCK_SIZE;
-            ch = screenData[pos_j][pos_i];
-
-            if ((ch & 16) != 0) {
-                screenData[pos_j][pos_i] = (short) (ch & 15);
-                score++;
-            }
-
-            if (req_dx != 0 || req_dy != 0) {
-                if (!((req_dx == -1 && req_dy == 0 && (ch & 1) != 0)
-                        || (req_dx == 1 && req_dy == 0 && (ch & 4) != 0)
-                        || (req_dx == 0 && req_dy == -1 && (ch & 2) != 0)
-                        || (req_dx == 0 && req_dy == 1 && (ch & 8) != 0))) {
-                    pacmand_x = req_dx;
-                    pacmand_y = req_dy;
-                    view_dx = pacmand_x;
-                    view_dy = pacmand_y;
-                }
-            }
-
-            // Check for standstill
-            if ((pacmand_x == -1 && pacmand_y == 0 && (ch & 1) != 0)
-                    || (pacmand_x == 1 && pacmand_y == 0 && (ch & 4) != 0)
-                    || (pacmand_x == 0 && pacmand_y == -1 && (ch & 2) != 0)
-                    || (pacmand_x == 0 && pacmand_y == 1 && (ch & 8) != 0)) {
-                pacmand_x = 0;
-                pacmand_y = 0;
-            }
-        }
-        pacman_x = pacman_x + PACMAN_SPEED * pacmand_x;
-        pacman_y = pacman_y + PACMAN_SPEED * pacmand_y;
+    private void moveLeft(){
+        pacman_x -=24;
+        pacman_y += 0;
+        view_dx = -1;
     }
+
+    private void moveRight(){
+        pacman_x +=24;
+        pacman_y += 0;
+        view_dx = 1;
+    }
+    private void moveUp(){
+        pacman_x += 0;
+        pacman_y -=24;
+        view_dy = -1;
+    }
+    private void moveDown(){
+        pacman_x += 0;
+        pacman_y += 24;
+        view_dy = 1;
+    }
+
+//    private void movePacman() {
+//
+//        int pos_i, pos_j;
+//
+//        short ch;
+//
+//        if (req_dx == -pacmand_x && req_dy == -pacmand_y) {
+//            pacmand_x = req_dx;
+//            pacmand_y = req_dy;
+//            view_dx = pacmand_x;
+//            view_dy = pacmand_y;
+//        }
+//
+//        if (pacman_x % BLOCK_SIZE == 0 && pacman_y % BLOCK_SIZE == 0) {
+//            pos_i = pacman_x / BLOCK_SIZE;
+//            pos_j = pacman_y / BLOCK_SIZE;
+//            ch = screenData[pos_j][pos_i];
+//
+//            if ((ch & 16) != 0) {
+//                screenData[pos_j][pos_i] = (short) (ch & 15);
+//                score++;
+//            }
+//
+//            if (req_dx != 0 || req_dy != 0) {
+//                if (!((req_dx == -1 && req_dy == 0 && (ch & 1) != 0)
+//                        || (req_dx == 1 && req_dy == 0 && (ch & 4) != 0)
+//                        || (req_dx == 0 && req_dy == -1 && (ch & 2) != 0)
+//                        || (req_dx == 0 && req_dy == 1 && (ch & 8) != 0))) {
+//                    pacmand_x = req_dx;
+//                    pacmand_y = req_dy;
+//                    view_dx = pacmand_x;
+//                    view_dy = pacmand_y;
+//                }
+//            }
+//
+//            // Check for standstill
+//            if ((pacmand_x == -1 && pacmand_y == 0 && (ch & 1) != 0)
+//                    || (pacmand_x == 1 && pacmand_y == 0 && (ch & 4) != 0)
+//                    || (pacmand_x == 0 && pacmand_y == -1 && (ch & 2) != 0)
+//                    || (pacmand_x == 0 && pacmand_y == 1 && (ch & 8) != 0)) {
+//                pacmand_x = 0;
+//                pacmand_y = 0;
+//            }
+//        }
+//        pacman_x = pacman_x + PACMAN_SPEED * pacmand_x;
+//        pacman_y = pacman_y + PACMAN_SPEED * pacmand_y;
+//    }
 
     private void drawPacman(Graphics2D g2d) {
 
@@ -551,11 +583,11 @@ public class Board extends JPanel implements ActionListener {
 //        continueLevel();
     }
 
-    private void continueLevel() {
-
-        short i;
-        int dx = 1;
-        int random;
+//    private void continueLevel() {
+//
+//        short i;
+//        int dx = 1;
+//        int random;
 
 //        for (i = 0; i < N_GHOSTS; i++) {
 //
@@ -572,17 +604,17 @@ public class Board extends JPanel implements ActionListener {
 //
 //            ghostSpeed[i] = validSpeeds[random];
 //        }
-
-        pacman_x = 7 * BLOCK_SIZE;
-        pacman_y = 11 * BLOCK_SIZE;
-        pacmand_x = 0;
-        pacmand_y = 0;
-        req_dx = 0;
-        req_dy = 0;
-        view_dx = -1;
-        view_dy = 0;
-        dying = false;
-    }
+//
+//        pacman_x = 7 * BLOCK_SIZE;
+//        pacman_y = 11 * BLOCK_SIZE;
+//        pacmand_x = 0;
+//        pacmand_y = 0;
+//        req_dx = 0;
+//        req_dy = 0;
+//        view_dx = -1;
+//        view_dy = 0;
+//        dying = false;
+//    }
 
     private void loadImages() {
 
@@ -606,7 +638,6 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         doDrawing(g);
     }
 
@@ -618,7 +649,8 @@ public class Board extends JPanel implements ActionListener {
         g2d.fillRect(0, 0, d.width, d.height);
 
         drawMaze(g2d);
-        drawScore(g2d);
+        drawInfo(g2d);
+//        drawScore(g2d);
         doAnim();
 
         if (inGame) {
@@ -643,15 +675,19 @@ public class Board extends JPanel implements ActionListener {
                 if (key == KeyEvent.VK_LEFT) {
                     req_dx = -1;
                     req_dy = 0;
+                    moveLeft();
                 } else if (key == KeyEvent.VK_RIGHT) {
                     req_dx = 1;
                     req_dy = 0;
+                    moveRight();
                 } else if (key == KeyEvent.VK_UP) {
                     req_dx = 0;
                     req_dy = -1;
+                    moveUp();
                 } else if (key == KeyEvent.VK_DOWN) {
                     req_dx = 0;
                     req_dy = 1;
+                    moveDown();
                 } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
                     inGame = false;
                 } else if (key == KeyEvent.VK_PAUSE) {
