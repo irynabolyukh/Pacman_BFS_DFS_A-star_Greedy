@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -23,6 +24,7 @@ import javax.swing.Timer;
 public class Board extends JPanel implements ActionListener {
 
     PathSearcher searcher;
+    List<Point> path;
 
     private Dimension d;
     private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
@@ -172,6 +174,8 @@ public class Board extends JPanel implements ActionListener {
                 searcher.screenData[i][j] = levelData[i][j];
             }
         }
+        searcher.searchForPath();
+        path = searcher.path;
 
         timer = new Timer(40, this);
         timer.start();
@@ -748,6 +752,7 @@ public class Board extends JPanel implements ActionListener {
             int key = e.getKeyCode();
 
             if (inGame) {
+
                 if (key == KeyEvent.VK_LEFT) {
                     req_dx = -1;
                     req_dy = 0;

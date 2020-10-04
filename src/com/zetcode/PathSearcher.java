@@ -2,12 +2,14 @@ package com.zetcode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public abstract class PathSearcher {
 
     public short[][] screenData;
 
     public List<Point> path = new ArrayList<Point>();
+    public Stack<Point> path_stack = new Stack<Point>();
 
     public int curr_x =0, curr_y=0;
 
