@@ -78,38 +78,38 @@ public class Board extends JPanel implements ActionListener {
 //            9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 25, 24, 24, 24, 28
 //    };
     private final short levelData[][] = {
-        {3, 10, 10, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6},
-        {5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-        {5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-        { 5, 0, 0, 0, 1, 0, 0, 8, 0, 0, 0, 0, 0, 0, 4},
-        {1, 2, 2, 2, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0, 4},
-        {1, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 0, 8, 4},
-        {9, 0, 0, 0, 8, 8, 12, 0, 9, 8, 8, 0, 4, 0, 5},
-        {1, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 5},
-        {1, 1, 0, 0, 2, 2, 6, 0, 3, 2, 2, 0, 4, 0, 5},
-        {1, 1, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5},
-        {1, 1, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5},
-        {1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4, 0, 5},
-        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5},
-        {1, 9, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 2, 4},
-        {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 8, 8, 8, 12}
+        {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
+        {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
+        {5, 0, 0, 0, 5, 0, 3, 10,6, 0, 3, 10, 12, 0, 5},
+        {5, 0, 0, 0, 5, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+        {1, 10, 10, 10, 12, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+        {5, 0, 0, 0, 0, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+        {9, 2, 10, 2, 10, 10, 12, 0, 9, 10, 8, 6, 0, 0, 5},
+        {1, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
+        {1, 5, 0, 1, 10, 10, 6, 0, 3, 10, 10, 8, 6, 0, 5},
+        {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
+        {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
+        {1, 5, 0, 9, 10, 10, 8, 10, 12, 0, 0, 0, 5, 0, 5},
+        {1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 4},
+        {1, 9, 10, 10, 10, 10, 10, 10, 10, 10, 6, 0, 0, 0, 5},
+        {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 10, 10, 12}
     };
 
     private final short blocksData[][] = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
-            {0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
-            {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
-            {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
-            {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+            {1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1},
+            {1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1},
+            {0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+            {0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1},
+            {0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1}
     };
 
@@ -364,6 +364,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void moveLeft(){
         isGoalReached();
+        canMoveLeft();
         if(CAN_MOVE){
             pacman_x -=24;
             view_dx = -1;
@@ -371,6 +372,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void moveRight(){
         isGoalReached();
+        canMoveRight();
         if(CAN_MOVE){
             pacman_x +=24;
             view_dx = 1;
@@ -378,6 +380,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void moveUp(){
         isGoalReached();
+        canMoveUp();
         if(CAN_MOVE){
             pacman_y -=24;
             view_dy = -1;
@@ -385,6 +388,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void moveDown(){
         isGoalReached();
+        canMoveDown();
         if(CAN_MOVE){
             pacman_y += 24;
             view_dy = 1;
@@ -403,15 +407,59 @@ public class Board extends JPanel implements ActionListener {
                 screenData[pos_j][pos_i] = (short) (ch & 15);
                 score++;
             }
+        }
+    }
 
-//            if (req_dx != 0 || req_dy != 0) {
-//                if (!((req_dx == -1 && req_dy == 0 && (ch & 1) != 0)
-//                        || (req_dx == 1 && req_dy == 0 && (ch & 4) != 0)
-//                        || (req_dx == 0 && req_dy == -1 && (ch & 2) != 0)
-//                        || (req_dx == 0 && req_dy == 1 && (ch & 8) != 0))) {
-                    CAN_MOVE = true;
-//                }
-//            }
+    private void canMoveLeft(){
+        int pos_i, pos_j;
+        short ch;
+        pos_i = pacman_x / BLOCK_SIZE;
+        pos_j = pacman_y / BLOCK_SIZE;
+        ch = screenData[pos_j][pos_i];
+
+            if((ch & 1) != 0){
+                CAN_MOVE = false;
+            }else{
+                CAN_MOVE = true;
+            }
+    }
+    private void canMoveUp(){
+        int pos_i, pos_j;
+        short ch;
+        pos_i = pacman_x / BLOCK_SIZE;
+        pos_j = pacman_y / BLOCK_SIZE;
+        ch = screenData[pos_j][pos_i];
+
+        if((ch & 2) != 0){
+            CAN_MOVE = false;
+        }else{
+            CAN_MOVE = true;
+        }
+    }
+    private void canMoveRight(){
+        int pos_i, pos_j;
+        short ch;
+        pos_i = pacman_x / BLOCK_SIZE;
+        pos_j = pacman_y / BLOCK_SIZE;
+        ch = screenData[pos_j][pos_i];
+
+        if((ch & 4) != 0){
+            CAN_MOVE = false;
+        }else{
+            CAN_MOVE = true;
+        }
+    }
+    private void canMoveDown(){
+        int pos_i, pos_j;
+        short ch;
+        pos_i = pacman_x / BLOCK_SIZE;
+        pos_j = pacman_y / BLOCK_SIZE;
+        ch = screenData[pos_j][pos_i];
+
+        if((ch & 8) != 0){
+            CAN_MOVE = false;
+        }else{
+            CAN_MOVE = true;
         }
     }
 //    private void movePacman() {
