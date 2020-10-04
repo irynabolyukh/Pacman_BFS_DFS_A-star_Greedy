@@ -75,47 +75,47 @@ public class Board extends JPanel implements ActionListener {
 //            1, 25, 24, 24, 24, 24, 24, 24, 24, 24, 16, 16, 16, 18, 20,
 //            9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 25, 24, 24, 24, 28
 //    };
-    private final short levelData[] = {
-            3, 10, 10, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6,
-            5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 1, 0, 0, 8, 0, 0, 0, 0, 0, 0, 4,
-            1, 2, 2, 2, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0, 4,
-            1, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 0, 8, 4,
-            9, 0, 0, 0, 8, 8, 12, 0, 9, 8, 8, 0, 4, 0, 5,
-            1, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 5,
-            1, 1, 0, 0, 2, 2, 6, 0, 3, 2, 2, 0, 4, 0, 5,
-            1, 1, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5,
-            1, 1, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5,
-            1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4, 0, 5,
-            1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5,
-            1, 9, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 2, 4,
-            9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 8, 8, 8, 12
+    private final short levelData[][] = {
+        {3, 10, 10, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6},
+        {5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+        {5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+        { 5, 0, 0, 0, 1, 0, 0, 8, 0, 0, 0, 0, 0, 0, 4},
+        {1, 2, 2, 2, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0, 4},
+        {1, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 0, 8, 4},
+        {9, 0, 0, 0, 8, 8, 12, 0, 9, 8, 8, 0, 4, 0, 5},
+        {1, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 5},
+        {1, 1, 0, 0, 2, 2, 6, 0, 3, 2, 2, 0, 4, 0, 5},
+        {1, 1, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5},
+        {1, 1, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5},
+        {1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4, 0, 5},
+        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5},
+        {1, 9, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 2, 4},
+        {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 8, 8, 8, 12}
     };
 
-    private final short blocksData[] = {
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1,
-            0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
-            0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1,
-            0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1,
-            0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1,
-            0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
-            0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
-            0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1
+    private final short blocksData[][] = {
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
+            {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1}
     };
 
     private final int validSpeeds[] = {1, 2, 3, 4, 6, 8};
     private final int maxSpeed = 6;
 
     private int currentSpeed = 3;
-    private short[] screenData;
+    private short[][] screenData;
     private Timer timer;
 
     public Board() {
@@ -136,7 +136,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void initVariables() {
 
-        screenData = new short[N_BLOCKS * N_BLOCKS];
+        screenData = new short[N_BLOCKS][N_BLOCKS];
         mazeColor = new Color(5, 100, 5);
         d = new Dimension(400, 400);
 //        ghost_x = new int[MAX_GHOSTS];
@@ -154,11 +154,12 @@ public class Board extends JPanel implements ActionListener {
         do{
             x = r.nextInt(15);
             y = r.nextInt(15);
-        }while(blocksData[x+15*y-1]==0);
+        }while(blocksData[y][x]==0);
+
         DOT_X = x*24;
         DOT_Y = y*24;
 
-        levelData[x+15*y-1] +=16;
+        levelData[y][x] +=16;
 
         timer = new Timer(40, this);
         timer.start();
@@ -233,16 +234,19 @@ public class Board extends JPanel implements ActionListener {
 
     private void checkMaze() {
 
-        short i = 0;
+//        short i = 0;
         boolean finished = true;
 
-        while (i < N_BLOCKS * N_BLOCKS && finished) {
+        while (finished) {
+            for(short i =0; i< 15; i++){
 
-            if ((screenData[i] & 48) != 0) {
-                finished = false;
+                for(short j =0; j< 15; j++){
+                    if ((screenData[i][j] & 48) != 0) {
+                        finished = false;
+                    }
+                }
+
             }
-
-            i++;
         }
 
         if (finished) {
@@ -352,7 +356,8 @@ public class Board extends JPanel implements ActionListener {
 
     private void movePacman() {
 
-        int pos;
+        int pos_i, pos_j;
+
         short ch;
 
         if (req_dx == -pacmand_x && req_dy == -pacmand_y) {
@@ -363,11 +368,12 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (pacman_x % BLOCK_SIZE == 0 && pacman_y % BLOCK_SIZE == 0) {
-            pos = pacman_x / BLOCK_SIZE + N_BLOCKS * (int) (pacman_y / BLOCK_SIZE);
-            ch = screenData[pos];
+            pos_i = pacman_x / BLOCK_SIZE;
+            pos_j = pacman_y / BLOCK_SIZE;
+            ch = screenData[pos_j][pos_i];
 
             if ((ch & 16) != 0) {
-                screenData[pos] = (short) (ch & 15);
+                screenData[pos_j][pos_i] = (short) (ch & 15);
                 score++;
             }
 
@@ -483,34 +489,38 @@ public class Board extends JPanel implements ActionListener {
 
     private void drawMaze(Graphics2D g2d) {
 
-        short i = 0;
+        short i;
         int x, y;
 
         for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
+            int j = y/BLOCK_SIZE;
+            i=0;
+
             for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
+
 
                 g2d.setColor(mazeColor);
                 g2d.setStroke(new BasicStroke(2));
 
-                if ((screenData[i] & 1) != 0) {
+                if ((screenData[j][i] & 1) != 0) {
                     g2d.drawLine(x, y, x, y + BLOCK_SIZE - 1);
                 }
 
-                if ((screenData[i] & 2) != 0) {
+                if ((screenData[j][i] & 2) != 0) {
                     g2d.drawLine(x, y, x + BLOCK_SIZE - 1, y);
                 }
 
-                if ((screenData[i] & 4) != 0) {
+                if ((screenData[j][i] & 4) != 0) {
                     g2d.drawLine(x + BLOCK_SIZE - 1, y, x + BLOCK_SIZE - 1,
                             y + BLOCK_SIZE - 1);
                 }
 
-                if ((screenData[i] & 8) != 0) {
+                if ((screenData[j][i] & 8) != 0) {
                     g2d.drawLine(x, y + BLOCK_SIZE - 1, x + BLOCK_SIZE - 1,
                             y + BLOCK_SIZE - 1);
                 }
 
-                if ((screenData[i] & 16) != 0) {
+                if ((screenData[j][i] & 16) != 0) {
                     g2d.setColor(dotColor);
                     g2d.fillRect(DOT_X + 11, DOT_Y + 11, 2, 2);
                 }
@@ -532,10 +542,12 @@ public class Board extends JPanel implements ActionListener {
 
     private void initLevel() {
 
-        int i;
+//        int i;
 
-        for (i = 0; i < N_BLOCKS * N_BLOCKS; i++) {
-            screenData[i] = levelData[i];
+        for (int i = 0; i < N_BLOCKS; i++) {
+            for(int j =0; j<N_BLOCKS; j++){
+                screenData[i][j] = levelData[i][j];
+            }
         }
 
 //        continueLevel();
