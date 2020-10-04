@@ -39,6 +39,7 @@ public class Board extends JPanel implements ActionListener {
     private final int PACMAN_ANIM_COUNT = 4;
     private int DOT_X;
     private int DOT_Y;
+    private boolean CAN_MOVE = false;
 //    private final int MAX_GHOSTS = 12;
     private final int PACMAN_SPEED = 6;
 
@@ -197,6 +198,7 @@ public class Board extends JPanel implements ActionListener {
 
 //            movePacman();
             drawPacman(g2d);
+            drawInfo(g2d);
 //            moveGhosts(g2d);
             checkMaze();
 //        }
@@ -227,16 +229,12 @@ public class Board extends JPanel implements ActionListener {
 //        g.setColor(new Color(96, 128, 255));
 //        s = "Score: " + score;
 //        g.drawString(s, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
-//
+
 //        for (i = 0; i < pacsLeft; i++) {
 //            g.drawImage(pacman3left, i * 28 + 8, SCREEN_SIZE + 1, this);
 //        }
 //    }
     private void drawInfo(Graphics2D g) {
-
-        int i;
-        String s;
-
         g.setFont(smallFont);
         g.setColor(new Color(96, 128, 255));
         gameover = "";
@@ -365,27 +363,57 @@ public class Board extends JPanel implements ActionListener {
 ////    }
 
     private void moveLeft(){
-        pacman_x -=24;
-        pacman_y += 0;
-        view_dx = -1;
+        isGoalReached();
+        if(CAN_MOVE){
+            pacman_x -=24;
+            view_dx = -1;
+        }
     }
-
     private void moveRight(){
-        pacman_x +=24;
-        pacman_y += 0;
-        view_dx = 1;
+        isGoalReached();
+        if(CAN_MOVE){
+            pacman_x +=24;
+            view_dx = 1;
+        }
     }
     private void moveUp(){
-        pacman_x += 0;
-        pacman_y -=24;
-        view_dy = -1;
+        isGoalReached();
+        if(CAN_MOVE){
+            pacman_y -=24;
+            view_dy = -1;
+        }
     }
     private void moveDown(){
-        pacman_x += 0;
-        pacman_y += 24;
-        view_dy = 1;
+        isGoalReached();
+        if(CAN_MOVE){
+            pacman_y += 24;
+            view_dy = 1;
+        }
     }
 
+    private void isGoalReached(){
+        int pos_i, pos_j;
+        short ch;
+        if (pacman_x % BLOCK_SIZE == 0 && pacman_y % BLOCK_SIZE == 0) {
+            pos_i = pacman_x / BLOCK_SIZE;
+            pos_j = pacman_y / BLOCK_SIZE;
+            ch = screenData[pos_j][pos_i];
+
+            if ((ch & 16) != 0) {
+                screenData[pos_j][pos_i] = (short) (ch & 15);
+                score++;
+            }
+
+//            if (req_dx != 0 || req_dy != 0) {
+//                if (!((req_dx == -1 && req_dy == 0 && (ch & 1) != 0)
+//                        || (req_dx == 1 && req_dy == 0 && (ch & 4) != 0)
+//                        || (req_dx == 0 && req_dy == -1 && (ch & 2) != 0)
+//                        || (req_dx == 0 && req_dy == 1 && (ch & 8) != 0))) {
+                    CAN_MOVE = true;
+//                }
+//            }
+        }
+    }
 //    private void movePacman() {
 //
 //        int pos_i, pos_j;
@@ -565,7 +593,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void initGame() {
 
-        pacsLeft = 3;
+//        pacsLeft = 3;
         score = 0;
         initLevel();
 //        N_GHOSTS = 6;
@@ -573,15 +601,12 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void initLevel() {
-
 //        int i;
-
         for (int i = 0; i < N_BLOCKS; i++) {
             for(int j =0; j<N_BLOCKS; j++){
                 screenData[i][j] = levelData[i][j];
             }
         }
-
 //        continueLevel();
     }
 
