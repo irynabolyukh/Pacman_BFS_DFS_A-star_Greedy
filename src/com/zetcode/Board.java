@@ -23,8 +23,8 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
-    PathSearcher searcher;
-    List<Point> path;
+//    PathSearcher searcher;
+//    List<Point> path;
 
     private Dimension d;
     private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
@@ -167,15 +167,15 @@ public class Board extends JPanel implements ActionListener {
         DOT_Y = y*24;
 
         levelData[y][x] +=16;
-
-        searcher = new PathSearcherDFS();
-        for (int i = 0; i < N_BLOCKS; i++) {
-            for(int j =0; j<N_BLOCKS; j++){
-                searcher.screenData[i][j] = levelData[i][j];
-            }
-        }
-        searcher.searchForPath();
-        path = searcher.path;
+//
+//        searcher = new PathSearcherDFS();
+//        for (int i = 0; i < N_BLOCKS; i++) {
+//            for(int j =0; j<N_BLOCKS; j++){
+//                searcher.screenData[i][j] = levelData[i][j];
+//            }
+//        }
+//        searcher.searchForPath();
+//        path = searcher.path;
 
         timer = new Timer(40, this);
         timer.start();
