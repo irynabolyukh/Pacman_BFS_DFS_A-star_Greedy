@@ -40,4 +40,8 @@ class MyPoint {
     public MyPoint moveDown(){
         return (new MyPoint(x, y+1, MyPoint.Direction.DOWN));
     }
+
+    public String toString() {
+        return "x: " + getX() + ", y: " + getY() +", dir: " + getD();
+    }
 }
