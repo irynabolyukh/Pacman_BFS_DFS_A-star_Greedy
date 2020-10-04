@@ -40,19 +40,19 @@ public class Board extends JPanel implements ActionListener {
     private int DOT_X;
     private int DOT_Y;
     private boolean CAN_MOVE = false;
-//    private final int MAX_GHOSTS = 12;
+    //    private final int MAX_GHOSTS = 12;
     private final int PACMAN_SPEED = 6;
 
     private int pacAnimCount = PAC_ANIM_DELAY;
     private int pacAnimDir = 1;
     private int pacmanAnimPos = 0;
-//    private int N_GHOSTS = 6;
+    //    private int N_GHOSTS = 6;
     private int pacsLeft, score;
     private String gameover;
     private int[] dx, dy;
 //    private int[] ghost_x, ghost_y, ghost_dx, ghost_dy, ghostSpeed;
 
-//    private Image ghost;
+    //    private Image ghost;
     private Image pacman1, pacman2up, pacman2left, pacman2right, pacman2down;
     private Image pacman3up, pacman3down, pacman3left, pacman3right;
     private Image pacman4up, pacman4down, pacman4left, pacman4right;
@@ -60,7 +60,7 @@ public class Board extends JPanel implements ActionListener {
     private int pacman_x, pacman_y, pacmand_x, pacmand_y;
     private int req_dx, req_dy, view_dx, view_dy;
 
-//    private final short levelData[] = {
+    //    private final short levelData[] = {
 //            19, 26, 26, 26, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22,
 //            21, 0, 0, 0, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20,
 //            21, 0, 0, 0, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20,
@@ -78,21 +78,21 @@ public class Board extends JPanel implements ActionListener {
 //            9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 25, 24, 24, 24, 28
 //    };
     private final short levelData[][] = {
-        {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
-        {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
-        {5, 0, 0, 0, 5, 0, 3, 10,6, 0, 3, 10, 12, 0, 5},
-        {5, 0, 0, 0, 5, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
-        {1, 10, 10, 10, 12, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
-        {5, 0, 0, 0, 0, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
-        {9, 2, 10, 2, 10, 10, 12, 0, 9, 10, 8, 6, 0, 0, 5},
-        {1, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
-        {1, 5, 0, 1, 10, 10, 6, 0, 3, 10, 10, 8, 6, 0, 5},
-        {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
-        {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
-        {1, 5, 0, 9, 10, 10, 8, 10, 12, 0, 0, 0, 5, 0, 5},
-        {1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 4},
-        {1, 9, 10, 10, 10, 10, 10, 10, 10, 10, 6, 0, 0, 0, 5},
-        {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 10, 10, 12}
+            {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
+            {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
+            {5, 0, 0, 0, 5, 0, 3, 10,6, 0, 3, 10, 12, 0, 5},
+            {5, 0, 0, 0, 5, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+            {1, 10, 10, 10, 12, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+            {5, 0, 0, 0, 0, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+            {9, 2, 10, 2, 10, 10, 12, 0, 9, 10, 8, 6, 0, 0, 5},
+            {1, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
+            {1, 5, 0, 1, 10, 10, 6, 0, 3, 10, 10, 8, 6, 0, 5},
+            {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
+            {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
+            {1, 5, 0, 9, 10, 10, 8, 10, 12, 0, 0, 0, 5, 0, 5},
+            {1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 4},
+            {1, 9, 10, 10, 10, 10, 10, 10, 10, 10, 6, 0, 0, 0, 5},
+            {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 10, 10, 12}
     };
 
     private final short blocksData[][] = {
@@ -197,10 +197,10 @@ public class Board extends JPanel implements ActionListener {
 //        } else {
 
 //            movePacman();
-            drawPacman(g2d);
-            drawInfo(g2d);
+        drawPacman(g2d);
+        drawInfo(g2d);
 //            moveGhosts(g2d);
-            checkMaze();
+        checkMaze();
 //        }
     }
 
@@ -230,7 +230,7 @@ public class Board extends JPanel implements ActionListener {
 //        s = "Score: " + score;
 //        g.drawString(s, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
 
-//        for (i = 0; i < pacsLeft; i++) {
+    //        for (i = 0; i < pacsLeft; i++) {
 //            g.drawImage(pacman3left, i * 28 + 8, SCREEN_SIZE + 1, this);
 //        }
 //    }
