@@ -128,9 +128,7 @@ public class Board extends JPanel implements ActionListener {
     private void initBoard() {
 
         addKeyListener(new TAdapter());
-
         setFocusable(true);
-
         setBackground(Color.black);
     }
 
