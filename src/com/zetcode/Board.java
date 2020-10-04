@@ -172,7 +172,6 @@ public class Board extends JPanel implements ActionListener {
 //        for (int i = 0; i < N_BLOCKS; i++) {
 //            for(int j =0; j<N_BLOCKS; j++){
 //                searcher.screenData[i][j] = levelData[i][j];
-//                searcher.blocksData[i][j] = blocksData[i][j];
 //            }
 //        }
 //        searcher.searchForPath();
@@ -427,10 +426,7 @@ public class Board extends JPanel implements ActionListener {
         pos_i = pacman_x / BLOCK_SIZE;
         pos_j = pacman_y / BLOCK_SIZE;
         ch = screenData[pos_j][pos_i];
-        if((ch & 1) != 0){
-            return false;
-        }
-        return true;
+        return ((ch & 1) == 0);
     }
     private boolean canMoveUp(){
         int pos_i, pos_j;
@@ -438,11 +434,7 @@ public class Board extends JPanel implements ActionListener {
         pos_i = pacman_x / BLOCK_SIZE;
         pos_j = pacman_y / BLOCK_SIZE;
         ch = screenData[pos_j][pos_i];
-
-        if((ch & 2) != 0){
-            return false;
-        }
-        return true;
+        return ((ch & 2) == 0);
     }
     private boolean canMoveRight(){
         int pos_i, pos_j;
@@ -450,11 +442,7 @@ public class Board extends JPanel implements ActionListener {
         pos_i = pacman_x / BLOCK_SIZE;
         pos_j = pacman_y / BLOCK_SIZE;
         ch = screenData[pos_j][pos_i];
-
-        if((ch & 4) != 0){
-            return false;
-        }
-        return true;
+        return ((ch & 4) == 0);
     }
     private boolean canMoveDown(){
         int pos_i, pos_j;
@@ -462,11 +450,7 @@ public class Board extends JPanel implements ActionListener {
         pos_i = pacman_x / BLOCK_SIZE;
         pos_j = pacman_y / BLOCK_SIZE;
         ch = screenData[pos_j][pos_i];
-
-        if((ch & 8) != 0){
-            return false;
-        }
-        return true;
+        return ((ch & 8) == 0);
     }
 //    private void movePacman() {
 //
@@ -519,7 +503,7 @@ public class Board extends JPanel implements ActionListener {
     private void drawPacman(Graphics2D g2d) {
 
         if (view_dx == -1) {
-            drawPacnanLeft(g2d);
+            drawPacmanLeft(g2d);
         } else if (view_dx == 1) {
             drawPacmanRight(g2d);
         } else if (view_dy == -1) {
@@ -565,7 +549,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void drawPacnanLeft(Graphics2D g2d) {
+    private void drawPacmanLeft(Graphics2D g2d) {
 
         switch (pacmanAnimPos) {
             case 1:
