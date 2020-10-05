@@ -28,7 +28,7 @@ public class Board extends JPanel implements ActionListener {
 
 
     PathSearcher searcher;
-    List<MyPoint> path;
+    List path;
 
 
 //    ArrayList<Integer> path;
@@ -71,21 +71,21 @@ public class Board extends JPanel implements ActionListener {
     private int req_dx, req_dy, view_dx, view_dy;
 
     private final short levelData[][] = {
-            {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
-            {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
-            {5, 0, 0, 0, 5, 0, 3, 10,6, 0, 3, 10, 12, 0, 5},
-            {5, 0, 0, 0, 5, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
-            {1, 10, 10, 10, 12, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
-            {5, 0, 0, 0, 0, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
-            {9, 2, 10, 2, 10, 10, 12, 0, 9, 10, 8, 6, 0, 0, 5},
-            {1, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
-            {1, 5, 0, 1, 10, 10, 6, 0, 3, 10, 10, 8, 6, 0, 5},
-            {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
-            {1, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
-            {1, 5, 0, 9, 10, 10, 8, 10, 12, 0, 0, 0, 5, 0, 5},
-            {1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 4},
-            {1, 9, 10, 10, 10, 10, 10, 10, 10, 10, 6, 0, 0, 0, 5},
-            {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 10, 10, 10, 12}
+            {3, 10, 10, 10,  2, 10, 10, 10, 10, 10, 10, 10,  2, 10,  6},
+            {5,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  5,  0,  5},
+            {5,  0,  0,  0,  5,  0,  3, 10,  6,  0,  3, 10, 12,  0,  5},
+            {5,  0,  0,  0,  5,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
+            {1, 10, 10, 10, 12,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
+            {5,  0,  0,  0,  0,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
+            {9,  2, 10,  2, 10, 10, 12,  0,  9, 10,  8,  6,  0,  0,  5},
+            {0,  5,  0,  5,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  5},
+            {0,  5,  0,  1, 10, 10,  6,  0,  3, 10, 10,  8,  6,  0,  5},
+            {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
+            {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
+            {0,  5,  0,  9, 10, 10,  8, 10, 12,  0,  0,  0,  5,  0,  5},
+            {0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10,  4},
+            {0,  9, 10, 10, 10, 10, 10, 10, 10, 10,  6,  0,  0,  0,  5},
+            {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10, 10, 10, 12}
     };
 
     private final short blocksData[][] = {
@@ -155,16 +155,16 @@ public class Board extends JPanel implements ActionListener {
 
 
 
-//        searcher = new PathSearcherDFS();
+        searcher = new PathSearcherDFS();
 
-//        for (int i = 0; i < N_BLOCKS; i++) {
-//            for(int j =0; j<N_BLOCKS; j++){
-//                searcher.screenData[i][j] = levelData[i][j];
-//            }
-//        }
-//        searcher.searchForPath();
+        for (int i = 0; i < N_BLOCKS; i++) {
+            for(int j =0; j<N_BLOCKS; j++){
+                searcher.screenData[i][j] = levelData[i][j];
+            }
+        }
+        searcher.searchForPath();
 
-//        path = searcher.path;
+        path = searcher.path;
 
         timer = new Timer(40, this);
         timer.start();
@@ -584,16 +584,27 @@ public class Board extends JPanel implements ActionListener {
         g2d.dispose();
     }
 
+    private void moveTo(int x, int y, MyPoint.Direction d){
 
-    public void moveTest (ArrayList<Integer> x, int num){
-
-        switch (x.get(num)) {
-            case 1: moveRight();
-            case 2: moveLeft();
-            case 3: moveUp();
-            case 4: moveDown();
-
+        switch (d){
+            case LEFT: view_dx = -1;
+            break;
+            case RIGHT: view_dx = 1;
+            break;
+            case UP: view_dy = -1;
+            break;
+            case DOWN: view_dy = 1;
+            break;
         }
+            pacman_x = 24*x;
+            pacman_y = 24*y;
+            num++;
+    }
+
+    public void moveTest (List<MyPoint> path, int num){
+
+        moveTo(path.get(num).getX(),path.get(num).getY(),path.get(num).getD());
+
     }
 
     class TAdapter extends KeyAdapter {
@@ -602,20 +613,12 @@ public class Board extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
 
-            ArrayList<Integer> path = new ArrayList<>();
-            path.add(1);
-            path.add(1);
-            path.add(1);
-            path.add(1);
-            path.add(4);
-
             int key = e.getKeyCode();
-
 
             if(inGame) {
 
                 if (key == KeyEvent.VK_ENTER) {
-                    moveTest(path, num);
+                    moveTest(path,num);
 
                 } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
                     inGame = false;

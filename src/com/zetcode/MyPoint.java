@@ -1,6 +1,16 @@
 package com.zetcode;
 
 class MyPoint {
+
+    private int x,y;
+    private Direction d;
+
+    public MyPoint(int x, int y, Direction d){
+        this.x = x;
+        this.y = y;
+        this.d = d;
+    }
+
     public int getX() {
         return x;
     }
@@ -13,13 +23,24 @@ class MyPoint {
         return d;
     }
 
-    int x,y;
-    Direction d;
+    public MyPoint moveLeft(){
+        return (new MyPoint(x-1, y, MyPoint.Direction.LEFT));
+    }
 
-    public MyPoint(int x, int y, Direction d){
-        this.x = x;
-        this.y = y;
-        this.d = d;
+    public MyPoint moveRight(){
+        return (new MyPoint(x+1, y, MyPoint.Direction.RIGHT));
+    }
+
+    public MyPoint moveUp(){
+        return (new MyPoint(x, y-1, MyPoint.Direction.UP));
+    }
+
+    public MyPoint moveDown(){
+        return (new MyPoint(x, y+1, MyPoint.Direction.DOWN));
+    }
+
+    public String toString() {
+        return "x: " + getX() + ", y: " + getY() +", dir: " + getD();
     }
 
     public enum Direction{
@@ -27,21 +48,5 @@ class MyPoint {
         RIGHT,
         UP,
         LEFT,
-    }
-    public MyPoint moveLeft(){
-        return (new MyPoint(x-1, y, MyPoint.Direction.LEFT));
-    }
-    public MyPoint moveRight(){
-        return (new MyPoint(x+1, y, MyPoint.Direction.RIGHT));
-    }
-    public MyPoint moveUp(){
-        return (new MyPoint(x, y-1, MyPoint.Direction.UP));
-    }
-    public MyPoint moveDown(){
-        return (new MyPoint(x, y+1, MyPoint.Direction.DOWN));
-    }
-
-    public String toString() {
-        return "x: " + getX() + ", y: " + getY() +", dir: " + getD();
     }
 }
