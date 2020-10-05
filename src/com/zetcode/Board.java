@@ -613,15 +613,7 @@ public class Board extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
 
-//            ArrayList<Integer> path = new ArrayList<>();
-//            path.add(1);
-//            path.add(1);
-//            path.add(1);
-//            path.add(1);
-//            path.add(4);
-
             int key = e.getKeyCode();
-
 
             if(inGame) {
 
