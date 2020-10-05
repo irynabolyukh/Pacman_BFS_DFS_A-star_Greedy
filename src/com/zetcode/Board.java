@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -21,11 +22,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+
 public class Board extends JPanel implements ActionListener {
 
 //    PathSearcher searcher;
-//    List<Point> path;
 
+//    ArrayList<Integer> path;
     private Dimension d;
     private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
 
@@ -64,23 +66,6 @@ public class Board extends JPanel implements ActionListener {
     private int pacman_x, pacman_y, pacmand_x, pacmand_y;
     private int req_dx, req_dy, view_dx, view_dy;
 
-    //    private final short levelData[] = {
-//            19, 26, 26, 26, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22,
-//            21, 0, 0, 0, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20,
-//            21, 0, 0, 0, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20,
-//            21, 0, 0, 0, 17, 16, 16, 24, 16, 16, 16, 16, 16, 16, 20,
-//            17, 18, 18, 18, 16, 16, 20, 0, 17, 16, 16, 16, 16, 16, 20,
-//            17, 16, 16, 16, 16, 16, 20, 0, 17, 16, 16, 16, 16, 24, 20,
-//            25, 16, 16, 16, 24, 24, 28, 0, 25, 24, 24, 16, 20, 0, 21,
-//            1, 17, 16, 20, 0, 0, 0, 0, 0, 0, 0, 17, 20, 0, 21,
-//            1, 17, 16, 16, 18, 18, 22, 0, 19, 18, 18, 16, 20, 0, 21,
-//            1, 17, 16, 16, 16, 16, 20, 0, 17, 16, 16, 16, 20, 0, 21,
-//            1, 17, 16, 16, 16, 16, 20, 0, 17, 16, 16, 16, 20, 0, 21,
-//            1, 17, 16, 16, 16, 16, 16, 18, 16, 16, 16, 16, 20, 0, 21,
-//            1, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20, 0, 21,
-//            1, 25, 24, 24, 24, 24, 24, 24, 24, 24, 16, 16, 16, 18, 20,
-//            9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 25, 24, 24, 24, 28
-//    };
     private final short levelData[][] = {
             {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
             {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
@@ -146,11 +131,7 @@ public class Board extends JPanel implements ActionListener {
         screenData = new short[N_BLOCKS][N_BLOCKS];
         mazeColor = new Color(5, 100, 5);
         d = new Dimension(400, 400);
-//        ghost_x = new int[MAX_GHOSTS];
-//        ghost_dx = new int[MAX_GHOSTS];
-//        ghost_y = new int[MAX_GHOSTS];
-//        ghost_dy = new int[MAX_GHOSTS];
-//        ghostSpeed = new int[MAX_GHOSTS];
+
         dx = new int[4];
         dy = new int[4];
 
@@ -167,14 +148,15 @@ public class Board extends JPanel implements ActionListener {
         DOT_Y = y*24;
 
         levelData[y][x] +=16;
-//
-//        searcher = new PathSearcherDFS();
+
+        //searcher = new PathSearcherDFS();
 //        for (int i = 0; i < N_BLOCKS; i++) {
 //            for(int j =0; j<N_BLOCKS; j++){
 //                searcher.screenData[i][j] = levelData[i][j];
 //            }
 //        }
 //        searcher.searchForPath();
+
 //        path = searcher.path;
 
         timer = new Timer(40, this);
@@ -204,18 +186,10 @@ public class Board extends JPanel implements ActionListener {
 
     private void playGame(Graphics2D g2d) {
 
-//        if (dying) {
-//
-//            death();
-//
-//        } else {
-
-//            movePacman();
         drawPacman(g2d);
         drawInfo(g2d);
-//            moveGhosts(g2d);
         checkMaze();
-//        }
+
     }
 
     private void showIntroScreen(Graphics2D g2d) {
@@ -275,112 +249,18 @@ public class Board extends JPanel implements ActionListener {
 
             score += 50;
 
-//            if (N_GHOSTS < MAX_GHOSTS) {
-//                N_GHOSTS++;
-//            }
-
-            if (currentSpeed < maxSpeed) {
-                currentSpeed++;
-            }
-
             initLevel();
         }
     }
 
-//    private void death() {
-//
-//        pacsLeft--;
-//
-//        if (pacsLeft == 0) {
-//            inGame = false;
-//        }
-//
-//        continueLevel();
-//    }
-
-//    private void moveGhosts(Graphics2D g2d) {
-//
-//        short i;
-//        int pos;
-//        int count;
-//
-//        for (i = 0; i < N_GHOSTS; i++) {
-//            if (ghost_x[i] % BLOCK_SIZE == 0 && ghost_y[i] % BLOCK_SIZE == 0) {
-//                pos = ghost_x[i] / BLOCK_SIZE + N_BLOCKS * (int) (ghost_y[i] / BLOCK_SIZE);
-//
-//                count = 0;
-//
-//                if ((screenData[pos] & 1) == 0 && ghost_dx[i] != 1) {
-//                    dx[count] = -1;
-//                    dy[count] = 0;
-//                    count++;
-//                }
-//
-//                if ((screenData[pos] & 2) == 0 && ghost_dy[i] != 1) {
-//                    dx[count] = 0;
-//                    dy[count] = -1;
-//                    count++;
-//                }
-//
-//                if ((screenData[pos] & 4) == 0 && ghost_dx[i] != -1) {
-//                    dx[count] = 1;
-//                    dy[count] = 0;
-//                    count++;
-//                }
-//
-//                if ((screenData[pos] & 8) == 0 && ghost_dy[i] != -1) {
-//                    dx[count] = 0;
-//                    dy[count] = 1;
-//                    count++;
-//                }
-//
-//                if (count == 0) {
-//
-//                    if ((screenData[pos] & 15) == 15) {
-//                        ghost_dx[i] = 0;
-//                        ghost_dy[i] = 0;
-//                    } else {
-//                        ghost_dx[i] = -ghost_dx[i];
-//                        ghost_dy[i] = -ghost_dy[i];
-//                    }
-//
-//                } else {
-//
-//                    count = (int) (Math.random() * count);
-//
-//                    if (count > 3) {
-//                        count = 3;
-//                    }
-//
-//                    ghost_dx[i] = dx[count];
-//                    ghost_dy[i] = dy[count];
-//                }
-//
-//            }
-//
-//            ghost_x[i] = ghost_x[i] + (ghost_dx[i] * ghostSpeed[i]);
-//            ghost_y[i] = ghost_y[i] + (ghost_dy[i] * ghostSpeed[i]);
-//            drawGhost(g2d, ghost_x[i] + 1, ghost_y[i] + 1);
-//
-//            if (pacman_x > (ghost_x[i] - 12) && pacman_x < (ghost_x[i] + 12)
-//                    && pacman_y > (ghost_y[i] - 12) && pacman_y < (ghost_y[i] + 12)
-//                    && inGame) {
-//
-//                dying = true;
-//            }
-//        }
-//    }
-
-//   private void drawGhost(Graphics2D g2d, int x, int y) {
-////
-////        g2d.drawImage(ghost, x, y, this);
-////    }
+    int num = 0;
 
     private void moveLeft(){
         isGoalReached();
         if(canMoveLeft()){
             pacman_x -=24;
             view_dx = -1;
+            num++;
         }
     }
     private void moveRight(){
@@ -388,6 +268,7 @@ public class Board extends JPanel implements ActionListener {
         if(canMoveRight()){
             pacman_x +=24;
             view_dx = 1;
+            num++;
         }
     }
     private void moveUp(){
@@ -395,6 +276,7 @@ public class Board extends JPanel implements ActionListener {
         if(canMoveUp()){
             pacman_y -=24;
             view_dy = -1;
+            num++;
         }
     }
     private void moveDown(){
@@ -402,6 +284,7 @@ public class Board extends JPanel implements ActionListener {
         if(canMoveDown()){
             pacman_y += 24;
             view_dy = 1;
+            num++;
         }
     }
 
@@ -654,51 +537,17 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void initLevel() {
-//        int i;
         for (int i = 0; i < N_BLOCKS; i++) {
             for(int j =0; j<N_BLOCKS; j++){
                 screenData[i][j] = levelData[i][j];
             }
         }
-//        continueLevel();
     }
 
-//    private void continueLevel() {
-//
-//        short i;
-//        int dx = 1;
-//        int random;
-
-//        for (i = 0; i < N_GHOSTS; i++) {
-//
-//            ghost_y[i] = 4 * BLOCK_SIZE;
-//            ghost_x[i] = 4 * BLOCK_SIZE;
-//            ghost_dy[i] = 0;
-//            ghost_dx[i] = dx;
-//            dx = -dx;
-//            random = (int) (Math.random() * (currentSpeed + 1));
-//
-//            if (random > currentSpeed) {
-//                random = currentSpeed;
-//            }
-//
-//            ghostSpeed[i] = validSpeeds[random];
-//        }
-//
-//        pacman_x = 7 * BLOCK_SIZE;
-//        pacman_y = 11 * BLOCK_SIZE;
-//        pacmand_x = 0;
-//        pacmand_y = 0;
-//        req_dx = 0;
-//        req_dy = 0;
-//        view_dx = -1;
-//        view_dy = 0;
-//        dying = false;
-//    }
 
     private void loadImages() {
 
-//        ghost = new ImageIcon("src/resources/images/ghost.png").getImage();
+
         pacman1 = new ImageIcon("src/resources/images/pacman.png").getImage();
         pacman2up = new ImageIcon("src/resources/images/up1.png").getImage();
         pacman3up = new ImageIcon("src/resources/images/up2.png").getImage();
@@ -730,7 +579,6 @@ public class Board extends JPanel implements ActionListener {
 
         drawMaze(g2d);
         drawInfo(g2d);
-//        drawScore(g2d);
         doAnim();
 
         if (inGame) {
@@ -744,31 +592,38 @@ public class Board extends JPanel implements ActionListener {
         g2d.dispose();
     }
 
+
+    public void moveTest (ArrayList<Integer> x, int num){
+        switch (x.get(num)) {
+            case 1 -> moveRight();
+            case 2 -> moveLeft();
+            case 3 -> moveUp();
+            case 4 -> moveDown();
+
+        }
+    }
+
     class TAdapter extends KeyAdapter {
+
 
         @Override
         public void keyPressed(KeyEvent e) {
 
+            ArrayList<Integer> path = new ArrayList<>();
+            path.add(1);
+            path.add(1);
+            path.add(1);
+            path.add(1);
+            path.add(4);
+
             int key = e.getKeyCode();
 
-            if (inGame) {
 
-                if (key == KeyEvent.VK_LEFT) {
-                    req_dx = -1;
-                    req_dy = 0;
-                    moveLeft();
-                } else if (key == KeyEvent.VK_RIGHT) {
-                    req_dx = 1;
-                    req_dy = 0;
-                    moveRight();
-                } else if (key == KeyEvent.VK_UP) {
-                    req_dx = 0;
-                    req_dy = -1;
-                    moveUp();
-                } else if (key == KeyEvent.VK_DOWN) {
-                    req_dx = 0;
-                    req_dy = 1;
-                    moveDown();
+            if(inGame) {
+
+                if (key == KeyEvent.VK_ENTER) {
+                    moveTest(path, num);
+
                 } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
                     inGame = false;
                 } else if (key == KeyEvent.VK_PAUSE) {
@@ -777,8 +632,11 @@ public class Board extends JPanel implements ActionListener {
                     } else {
                         timer.start();
                     }
+
                 }
-            } else {
+
+            }
+            else {
                 if (key == 's' || key == 'S') {
                     inGame = true;
                     initGame();
