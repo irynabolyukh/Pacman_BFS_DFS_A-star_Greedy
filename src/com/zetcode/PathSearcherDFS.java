@@ -23,12 +23,13 @@ public class PathSearcherDFS extends PathSearcher{
 
             //get current position
             crt = (MyPoint) path_stack.pop();
-            if (isGoalReached(crt)) {
-                break;
-            }
 
             //to remember all visited
             path.add(crt);
+
+            if (isGoalReached(crt)) {
+                break;
+            }
 
             markVisited(crt);
 
