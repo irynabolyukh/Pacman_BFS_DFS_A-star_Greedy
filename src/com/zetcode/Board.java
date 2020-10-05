@@ -155,7 +155,7 @@ public class Board extends JPanel implements ActionListener {
 
 
 
-        searcher = new PathSearcherDFS();
+        searcher = new PathSearcherBFS();
 
         for (int i = 0; i < N_BLOCKS; i++) {
             for(int j =0; j<N_BLOCKS; j++){
