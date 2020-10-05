@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-public abstract class PathSearcher<i> {
+public abstract class PathSearcher {
 
     public short[][] screenData = {
-            {3, 10, 10, 26, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
+            {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
             {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
             {5, 0, 0, 0, 5, 0, 3, 10,6, 0, 3, 10, 12, 0, 5},
             {5, 0, 0, 0, 5, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
@@ -44,7 +44,7 @@ public abstract class PathSearcher<i> {
     public boolean isClearLeft(int i, int j) {
         assert (isInMaze(i, j));
         short ch;
-        ch = screenData[i][j];
+        ch = screenData[j][i];
         return (((ch & 4) == 0)&&(ch != 0));
     }
 
@@ -66,7 +66,7 @@ public abstract class PathSearcher<i> {
     public boolean isClearUp(int i, int j) {
         assert (isInMaze(i, j));
         short ch;
-        ch = screenData[i][j];
+        ch = screenData[j][i];
         return (((ch & 8) == 0)&&(ch != 0));
     }
 
