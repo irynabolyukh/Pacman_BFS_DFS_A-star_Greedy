@@ -8,13 +8,17 @@ public class PathSearcherBFS extends PathSearcher{
 
         duration = stopTime - startTime;    //calculate the elapsed time
 
-        dfsTime =  (double)duration / 1000000;   //convert to ms
-        System.out.println(String.format("Time %1.3f ms", dfsTime));
+        timeInMs =  (double)duration / 1000000;   //convert to ms
+        System.out.println(String.format("Time %1.3f ms", timeInMs));
+
+        totalUsedMemory = afterSearchMemory - beforeSearchMemory;
+        System.out.println("Memory used "+ totalUsedMemory);
     }
 
     public void solveBFS() {
 
         // start of the time
+        beforeSearchMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         startTime = System.nanoTime();
 
         MyPoint crt, next;
@@ -32,6 +36,7 @@ public class PathSearcherBFS extends PathSearcher{
             if (isGoalReached(crt)) {
                 path.add(crt);
                 stopTime = System.nanoTime();
+                afterSearchMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 break;
             }
 
