@@ -586,11 +586,12 @@ public class Board extends JPanel implements ActionListener {
 
 
     public void moveTest (ArrayList<Integer> x, int num){
+
         switch (x.get(num)) {
-            case 1 -> moveRight();
-            case 2 -> moveLeft();
-            case 3 -> moveUp();
-            case 4 -> moveDown();
+            case 1: moveRight();
+            case 2: moveLeft();
+            case 3: moveUp();
+            case 4: moveDown();
 
         }
     }
