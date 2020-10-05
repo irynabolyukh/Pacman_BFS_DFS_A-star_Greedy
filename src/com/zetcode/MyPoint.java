@@ -13,8 +13,8 @@ class MyPoint {
         return d;
     }
 
-    int x,y;
-    Direction d;
+    private int x,y;
+    private Direction d;
 
     public MyPoint(int x, int y, Direction d){
         this.x = x;
