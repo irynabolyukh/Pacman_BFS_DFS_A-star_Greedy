@@ -14,10 +14,11 @@ public class PathSearcherDFS extends PathSearcher{
     }
     public void solveDFS() {
         //insert the start
-        path_stack.push(new MyPoint(0, 0, MyPoint.Direction.RIGHT));
+        path_stack.push(new MyPoint(0, 0, MyPoint.Direction.DOWN));
 
         MyPoint crt;   //current node
         MyPoint next;  //next node
+        boolean wentSomewhear;
 
         while (!path_stack.empty()) {
 
@@ -33,22 +34,33 @@ public class PathSearcherDFS extends PathSearcher{
 
             markVisited(crt);
 
+            wentSomewhear = false;
+
             //put its neighbours in the queue
             next = crt.moveDown();  // go down from the current node
             if (isInMaze(next) && isClearDown(next) && !isVisited(next)) {
                 path_stack.push(next);
+                wentSomewhear = true;
             }
             next = crt.moveRight();    //go right from the current node
             if (isInMaze(next) && isClearRight(next) && !isVisited(next)) {
                 path_stack.push(next);
+                wentSomewhear = true;
             }
             next = crt.moveUp();    // go up
             if (isInMaze(next) && isClearUp(next) && !isVisited(next)) {
                 path_stack.push(next);
+                wentSomewhear = true;
             }
             next = crt.moveLeft();    //go left from the current node
             if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
                 path_stack.push(next);
+                wentSomewhear = true;
+            }
+
+            if(!wentSomewhear) {
+
+                path.remove(crt);
             }
         }
 
