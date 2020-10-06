@@ -21,17 +21,18 @@ public class Pacman extends JFrame {
     }
 
     public static void main(String[] args) {
-//
-//        PathSearcherDFS searcherDFS = new PathSearcherDFS();
-//        searcherDFS.searchForPath();
+
+//        PathSearcherBFS searcherBFS = new PathSearcherBFS();
+//        searcherBFS.searchForPath();
 //        System.out.println("ALL VISITED:");
-//        for(int i=0;i<searcherDFS.path.size();i++){
-//            System.out.println(searcherDFS.path.get(i));
+//        for(int i=0;i<searcherBFS.path.size();i++){
+//            System.out.println(searcherBFS.path.get(i));
 //        }
 //        System.out.println("\n\nRIGHT PATH:");
-//        for(int i=0;i<searcherDFS.path_stack.size();i++){
-//            System.out.println(searcherDFS.path_stack.get(i));
+//        for(int i=0;i<searcherBFS.path_stack.size();i++){
+//            System.out.println(searcherBFS.path_stack.get(i));
 //        }
+
         EventQueue.invokeLater(() -> {
 
             Pacman ex = new Pacman();

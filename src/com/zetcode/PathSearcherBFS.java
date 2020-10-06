@@ -5,15 +5,23 @@ public class PathSearcherBFS extends PathSearcher{
     @Override
     public void searchForPath() {
         solveBFS();
+
+        duration = stopTime - startTime;    //calculate the elapsed time
+
+        dfsTime =  (double)duration / 1000000;   //convert to ms
+        System.out.println(String.format("Time %1.3f ms", dfsTime));
     }
+
     public void solveBFS() {
+
+        // start of the time
+        startTime = System.nanoTime();
+
+        MyPoint crt, next;
 
         // add initial node to the list
         path_queue.add(new MyPoint(0, 0, MyPoint.Direction.RIGHT));
 
-        MyPoint crt, next;
-
-        boolean wentSomewhear;
 
         while (!path_queue.isEmpty()) {
 
@@ -22,42 +30,33 @@ public class PathSearcherBFS extends PathSearcher{
 
             // to be sure if it reach the goal
             if (isGoalReached(crt)) {
+                path.add(crt);
+                stopTime = System.nanoTime();
                 break;
             }
 
             //to remember all visited
             path.add(crt);
+            markVisited(crt);
 
-            wentSomewhear = false;
 
             //put its neighbors in the queue
             next = crt.moveUp();    //move up
             if (isInMaze(next) && isClearUp(next) && !isVisited(next)) {
                 path_queue.add(next);
-                wentSomewhear = true;
             }
             next = crt.moveRight();    //move right
             if (isInMaze(next) && isClearRight(next) && !isVisited(next)) {
                 path_queue.add(next);
-                wentSomewhear = true;
-            }
-            next = crt.moveLeft();    //move left
-            if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
-                path_queue.add(next);
-                wentSomewhear = true;
             }
             next = crt.moveDown();   //move down
             if (isInMaze(next) && isClearDown(next) && !isVisited(next)) {
                 path_queue.add(next);
-                wentSomewhear = true;
             }
-
-            if(!wentSomewhear) {
-
-                path.remove(crt);
+            next = crt.moveLeft();    //move left
+            if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
+                path_queue.add(next);
             }
-
         }
-
     }
 }
