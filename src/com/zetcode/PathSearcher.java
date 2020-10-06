@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-public abstract class PathSearcher<i> {
+public abstract class PathSearcher {
 
 //    public short[][] screenData = {
 //            {3, 10, 10, 10,  2, 10, 26, 10, 10, 10, 10, 10,  2, 10,  6},

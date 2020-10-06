@@ -85,7 +85,7 @@ public class Board extends JPanel implements ActionListener {
             {0,  5,  0,  9, 10, 10,  8, 10, 12,  0,  0,  0,  5,  0,  5},
             {0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10,  4},
             {0,  9, 10, 10, 10, 10, 10, 10, 10, 10,  6,  0,  0,  0,  5},
-            {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10, 10, 10, 12}
+            {8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  9, 10, 10, 10, 12}
     };
 
     private final short blocksData[][] = {
@@ -112,6 +112,7 @@ public class Board extends JPanel implements ActionListener {
     private int currentSpeed = 3;
     private short[][] screenData;
     private Timer timer;
+
 
     public Board() {
 
@@ -153,22 +154,22 @@ public class Board extends JPanel implements ActionListener {
 
         levelData[y][x] +=16;
 
-
-
-        searcher = new PathSearcherBFS();
-
-        for (int i = 0; i < N_BLOCKS; i++) {
-            for(int j =0; j<N_BLOCKS; j++){
-                searcher.screenData[i][j] = levelData[i][j];
-            }
-        }
-        searcher.searchForPath();
-
-        path = searcher.path;
+////        searcher = new PathSearcherBFS();
+//
+//        for (int i = 0; i < N_BLOCKS; i++) {
+//            for(int j =0; j<N_BLOCKS; j++){
+//                searcher.screenData[i][j] = levelData[i][j];
+//            }
+//        }
+//        searcher.searchForPath();
+//
+//        path = searcher.path;
 
         timer = new Timer(40, this);
         timer.start();
     }
+
+
 
     @Override
     public void addNotify() {
@@ -206,7 +207,7 @@ public class Board extends JPanel implements ActionListener {
         g2d.setColor(Color.white);
         g2d.drawRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
 
-        String s = "Press s to start.";
+        String s = "Press B for BFS or D for DFS";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
 
@@ -215,20 +216,20 @@ public class Board extends JPanel implements ActionListener {
         g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
     }
 
-//    private void drawScore(Graphics2D g) {
-//
-//        int i;
-//        String s;
-//
-//        g.setFont(smallFont);
-//        g.setColor(new Color(96, 128, 255));
-//        s = "Score: " + score;
-//        g.drawString(s, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
+    private void drawScore(Graphics2D g) {
 
-    //        for (i = 0; i < pacsLeft; i++) {
+        int i;
+        String s;
+
+        g.setFont(smallFont);
+        g.setColor(new Color(96, 128, 255));
+        s = "Amount of Steps: " + score;
+        g.drawString(s, SCREEN_SIZE / 2 + 30, SCREEN_SIZE + 16);
+
+//            for (i = 0; i < pacsLeft; i++) {
 //            g.drawImage(pacman3left, i * 28 + 8, SCREEN_SIZE + 1, this);
 //        }
-//    }
+    }
     private void drawInfo(Graphics2D g) {
         g.setFont(smallFont);
         g.setColor(new Color(96, 128, 255));
@@ -305,7 +306,7 @@ public class Board extends JPanel implements ActionListener {
 
             if ((ch & 16) != 0) {
                 screenData[pos_j][pos_i] = (short) (ch & 15);
-                score++;
+
             }
         }
     }
@@ -570,6 +571,7 @@ public class Board extends JPanel implements ActionListener {
         g2d.fillRect(0, 0, d.width, d.height);
 
         drawMaze(g2d);
+        drawScore(g2d);
         drawInfo(g2d);
         doAnim();
 
@@ -599,6 +601,7 @@ public class Board extends JPanel implements ActionListener {
             pacman_x = 24*x;
             pacman_y = 24*y;
             num++;
+            score++;
     }
 
     public void moveTest (List<MyPoint> path, int num){
@@ -624,22 +627,39 @@ public class Board extends JPanel implements ActionListener {
 
                 } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
                     inGame = false;
+
                 } else if (key == KeyEvent.VK_PAUSE) {
                     if (timer.isRunning()) {
                         timer.stop();
                     } else {
                         timer.start();
                     }
-
                 }
-
             }
             else {
-                if (key == 's' || key == 'S') {
+                if (key == 'b' || key == 'B') {
                     inGame = true;
-                    initGame();
+                    searcher = new PathSearcherBFS();
+                    chosenSearcher();
+                }
+                if (key == 'd' || key == 'D') {
+                    inGame = true;
+                    searcher = new PathSearcherDFS();
+                    chosenSearcher();
                 }
             }
+        }
+
+        private void chosenSearcher() {
+            for (int i = 0; i < N_BLOCKS; i++) {
+                for(int j =0; j<N_BLOCKS; j++){
+                    searcher.screenData[i][j] = levelData[i][j];
+                }
+            }
+            searcher.searchForPath();
+
+            path = searcher.path;
+            initGame();
         }
 
         @Override

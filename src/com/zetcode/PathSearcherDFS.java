@@ -18,6 +18,7 @@ public class PathSearcherDFS extends PathSearcher{
         totalUsedMemory = time.totalMemory() - time.freeMemory();
         totalUsedMemoryInBytes = totalUsedMemory/1024;
 
+        System.out.println("___DFS___");
         System.out.println("Time in milliseconds: " + timeInMs);
         System.out.println("Memory in bytes: " + totalUsedMemoryInBytes);
 
