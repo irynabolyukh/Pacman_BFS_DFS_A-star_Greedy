@@ -39,7 +39,7 @@ public class PathSearcherBFS extends PathSearcher{
             //get current position
             crt = (MyPoint) path_queue.removeFirst();
 
-            // to be sure if it reach the goal
+            // to check if goal reached
             if (isGoalReached(crt)) {
                 path.add(crt);
                 break;
@@ -50,19 +50,19 @@ public class PathSearcherBFS extends PathSearcher{
             markVisited(crt);
 
             //put its neighbors in the queue
-            next = crt.moveUp();    //move up
+            next = crt.moveUp();
             if (isInMaze(next) && isClearUp(next) && !isVisited(next)) {
                 path_queue.add(next);
             }
-            next = crt.moveRight();    //move right
+            next = crt.moveRight();
             if (isInMaze(next) && isClearRight(next) && !isVisited(next)) {
                 path_queue.add(next);
             }
-            next = crt.moveDown();   //move down
+            next = crt.moveDown();
             if (isInMaze(next) && isClearDown(next) && !isVisited(next)) {
                 path_queue.add(next);
             }
-            next = crt.moveLeft();    //move left
+            next = crt.moveLeft();
             if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
                 path_queue.add(next);
             }
