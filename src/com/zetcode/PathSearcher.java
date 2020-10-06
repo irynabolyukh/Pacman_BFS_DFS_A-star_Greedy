@@ -32,18 +32,14 @@ public abstract class PathSearcher<i> {
 
     public int[][] isVisited = new int[15][15];
 
-    // start time
     long startTime;
-    //stop time
     long stopTime;
-    //calculate the elapsed time
     long duration;
-    //time for DFS
-    double dfsTime;
-    //time for BFS
-    double bfsTime;
+    double timeInMs;
 
-    int steps_amount;
+    long beforeSearchMemory;
+    long afterSearchMemory;
+    long totalUsedMemory;
 
     public boolean isGoalReached(int i, int j) {
         short ch;

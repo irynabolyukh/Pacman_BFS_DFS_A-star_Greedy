@@ -9,13 +9,18 @@ public class PathSearcherDFS extends PathSearcher{
 
         duration = stopTime - startTime;    //calculate the elapsed time
 
-        dfsTime =  (double)duration / 1000000;   //convert to ms
-        System.out.println(String.format("Time %1.3f ms", dfsTime));
+        timeInMs =  (double)duration / 1000000;   //convert to ms
+        System.out.println(String.format("Time %1.3f ms", timeInMs));
+
+        totalUsedMemory = afterSearchMemory - beforeSearchMemory;
+        System.out.println("Before memory "+ beforeSearchMemory);
+        System.out.println("After memory "+ afterSearchMemory);
     }
 
     public void solveDFS() {
 
         // start of the time
+        beforeSearchMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         startTime = System.nanoTime();
 
         MyPoint crt;   //current node
@@ -35,6 +40,7 @@ public class PathSearcherDFS extends PathSearcher{
 
             if (isGoalReached(crt)) {
                 stopTime = System.nanoTime();
+                afterSearchMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 break;
             }
 
