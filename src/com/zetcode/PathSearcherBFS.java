@@ -17,6 +17,7 @@ public class PathSearcherBFS extends PathSearcher{
         totalUsedMemory = time.totalMemory() - time.freeMemory();
         totalUsedMemoryInBytes = totalUsedMemory/1024;
 
+        System.out.println("___BFS___");
         System.out.println("Time in milliseconds: " + timeInMs);
         System.out.println("Memory in bytes: " + totalUsedMemoryInBytes);
 
@@ -47,7 +48,6 @@ public class PathSearcherBFS extends PathSearcher{
             //to remember all visited
             path.add(crt);
             markVisited(crt);
-
 
             //put its neighbors in the queue
             next = crt.moveUp();    //move up
