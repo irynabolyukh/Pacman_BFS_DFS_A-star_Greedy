@@ -4,22 +4,28 @@ public class PathSearcherBFS extends PathSearcher{
 
     @Override
     public void searchForPath() {
+
+        Runtime time = Runtime.getRuntime();
+        time.gc();
+        startTime = System.nanoTime();
+
         solveBFS();
 
-        duration = stopTime - startTime;    //calculate the elapsed time
+        stopTime = System.nanoTime();
+        duration = stopTime - startTime;
+        timeInMs = (double)duration/1000000;
+        totalUsedMemory = time.totalMemory() - time.freeMemory();
+        totalUsedMemoryInBytes = totalUsedMemory/1024;
 
-        timeInMs =  (double)duration / 1000000;   //convert to ms
-        System.out.println(String.format("Time %1.3f ms", timeInMs));
+        System.out.println("Time in milliseconds: " + timeInMs);
+        System.out.println("Memory in bytes: " + totalUsedMemoryInBytes);
 
-        totalUsedMemory = afterSearchMemory - beforeSearchMemory;
-        System.out.println("Memory used "+ totalUsedMemory);
+        totalSteps = path.size();
+
+        System.out.println("Steps: " + totalSteps);
     }
 
     public void solveBFS() {
-
-        // start of the time
-        beforeSearchMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        startTime = System.nanoTime();
 
         MyPoint crt, next;
 
@@ -35,8 +41,6 @@ public class PathSearcherBFS extends PathSearcher{
             // to be sure if it reach the goal
             if (isGoalReached(crt)) {
                 path.add(crt);
-                stopTime = System.nanoTime();
-                afterSearchMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 break;
             }
 

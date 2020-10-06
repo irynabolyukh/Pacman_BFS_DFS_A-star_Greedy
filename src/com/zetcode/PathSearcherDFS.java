@@ -5,23 +5,28 @@ public class PathSearcherDFS extends PathSearcher{
 
     @Override
     public void searchForPath() {
+
+        Runtime time = Runtime.getRuntime();
+        time.gc();
+        startTime = System.nanoTime();
+
         solveDFS();
 
-        duration = stopTime - startTime;    //calculate the elapsed time
+        stopTime = System.nanoTime();
+        duration = stopTime - startTime;
+        timeInMs = (double)duration/1000000;
+        totalUsedMemory = time.totalMemory() - time.freeMemory();
+        totalUsedMemoryInBytes = totalUsedMemory/1024;
 
-        timeInMs =  (double)duration / 1000000;   //convert to ms
-        System.out.println(String.format("Time %1.3f ms", timeInMs));
+        System.out.println("Time in milliseconds: " + timeInMs);
+        System.out.println("Memory in bytes: " + totalUsedMemoryInBytes);
 
-        totalUsedMemory = afterSearchMemory - beforeSearchMemory;
-        System.out.println("Before memory "+ beforeSearchMemory);
-        System.out.println("After memory "+ afterSearchMemory);
+        totalSteps = path.size();
+
+        System.out.println("Steps: " + totalSteps);
     }
 
     public void solveDFS() {
-
-        // start of the time
-        beforeSearchMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        startTime = System.nanoTime();
 
         MyPoint crt;   //current node
         MyPoint next;  //next node
@@ -39,8 +44,6 @@ public class PathSearcherDFS extends PathSearcher{
             path.add(crt);
 
             if (isGoalReached(crt)) {
-                stopTime = System.nanoTime();
-                afterSearchMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 break;
             }
 
