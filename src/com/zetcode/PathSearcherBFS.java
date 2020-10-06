@@ -12,6 +12,9 @@ public class PathSearcherBFS extends PathSearcher{
         path_queue.add(new MyPoint(0, 0, MyPoint.Direction.RIGHT));
 
         MyPoint crt, next;
+
+        boolean wentSomewhear;
+
         while (!path_queue.isEmpty()) {
 
             //get current position
@@ -25,22 +28,33 @@ public class PathSearcherBFS extends PathSearcher{
             //to remember all visited
             path.add(crt);
 
+            wentSomewhear = false;
+
             //put its neighbors in the queue
             next = crt.moveUp();    //move up
             if (isInMaze(next) && isClearUp(next) && !isVisited(next)) {
                 path_queue.add(next);
+                wentSomewhear = true;
             }
             next = crt.moveRight();    //move right
             if (isInMaze(next) && isClearRight(next) && !isVisited(next)) {
                 path_queue.add(next);
+                wentSomewhear = true;
             }
             next = crt.moveLeft();    //move left
             if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
                 path_queue.add(next);
+                wentSomewhear = true;
             }
             next = crt.moveDown();   //move down
             if (isInMaze(next) && isClearDown(next) && !isVisited(next)) {
                 path_queue.add(next);
+                wentSomewhear = true;
+            }
+
+            if(!wentSomewhear) {
+
+                path.remove(crt);
             }
 
         }
