@@ -24,19 +24,19 @@ class MyPoint {
     }
 
     public MyPoint moveLeft(){
-        return (new MyPoint(x-1, y, MyPoint.Direction.LEFT));
+        return (new MyPoint(x-1, y, Direction.LEFT));
     }
 
     public MyPoint moveRight(){
-        return (new MyPoint(x+1, y, MyPoint.Direction.RIGHT));
+        return (new MyPoint(x+1, y, Direction.RIGHT));
     }
 
     public MyPoint moveUp(){
-        return (new MyPoint(x, y-1, MyPoint.Direction.UP));
+        return (new MyPoint(x, y-1, Direction.UP));
     }
 
     public MyPoint moveDown(){
-        return (new MyPoint(x, y+1, MyPoint.Direction.DOWN));
+        return (new MyPoint(x, y+1, Direction.DOWN));
     }
 
     public String toString() {
@@ -48,5 +48,6 @@ class MyPoint {
         RIGHT,
         UP,
         LEFT,
+        STILL
     }
 }
