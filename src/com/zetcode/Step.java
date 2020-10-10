@@ -15,24 +15,8 @@ public class Step {
         return from;
     }
 
-    public void setFrom(MyPoint from) {
-        this.from = from;
-    }
-
     public int getG() {
         return g;
-    }
-
-    public void setG(int g) {
-        this.g = g;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 
     @Override
