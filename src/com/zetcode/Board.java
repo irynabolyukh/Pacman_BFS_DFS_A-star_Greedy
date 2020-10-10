@@ -647,6 +647,11 @@ public class Board extends JPanel implements ActionListener {
                     searcher = new PathSearcherDFS();
                     chosenSearcher();
                 }
+                if (key == 'g' || key == 'G') {
+                    inGame = true;
+                    searcher = new PathSearcherGreedy();
+                    chosenSearcher();
+                }
             }
         }
 

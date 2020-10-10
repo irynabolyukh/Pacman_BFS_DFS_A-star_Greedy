@@ -22,7 +22,7 @@ public class Pacman extends JFrame {
 
     public static void main(String[] args) {
 
-//        PathSearcherBFS searcherBFS = new PathSearcherBFS();
+//        PathSearcherGreedy searcherBFS = new PathSearcherGreedy();
 //        searcherBFS.searchForPath();
 //        System.out.println("ALL VISITED:");
 //        for(int i=0;i<searcherBFS.path.size();i++){
@@ -32,7 +32,7 @@ public class Pacman extends JFrame {
 //        for(int i=0;i<searcherBFS.path_stack.size();i++){
 //            System.out.println(searcherBFS.path_stack.get(i));
 //        }
-
+//
         EventQueue.invokeLater(() -> {
 
             Pacman ex = new Pacman();
