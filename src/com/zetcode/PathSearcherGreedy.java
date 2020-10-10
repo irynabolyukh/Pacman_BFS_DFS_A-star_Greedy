@@ -1,6 +1,5 @@
 package com.zetcode;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class PathSearcherGreedy extends PathSearcher {
@@ -32,8 +31,8 @@ public class PathSearcherGreedy extends PathSearcher {
     public void solveGreedy() {
 
         MyPoint crt;
-        MyPoint nextD, nextR, nextU, nextL;
-        double distD, distR, distU, distL;
+        MyPoint next;
+        double dist;
         boolean wentSomewhere;
         List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
 
@@ -53,39 +52,35 @@ public class PathSearcherGreedy extends PathSearcher {
 
             wentSomewhere = false;
 
-            nextL = crt.moveLeft();
-            if (isInMaze(nextL) && isClearLeft(nextL) && !isVisited(nextL)) {
-                distL = manhattan_distance(nextL, goal);
-                pointHeuristics.add(new PointHeuristic(nextL,distL));
+            next = crt.moveLeft();
+            if (isInMaze(next) && isClearLeft(next) && !isVisited(next)) {
+                dist = manhattan_distance(next, goal);
+                pointHeuristics.add(new PointHeuristic(next,dist));
                 wentSomewhere = true;
             }
 
-            nextU = crt.moveUp();
-            if (isInMaze(nextU) && isClearUp(nextU) && !isVisited(nextU)) {
-                distU = manhattan_distance(nextU, goal);
-                pointHeuristics.add(new PointHeuristic(nextU,distU));
+            next = crt.moveUp();
+            if (isInMaze(next) && isClearUp(next) && !isVisited(next)) {
+                dist = manhattan_distance(next, goal);
+                pointHeuristics.add(new PointHeuristic(next,dist));
                 wentSomewhere = true;
             }
 
-            nextR = crt.moveRight();
-            if (isInMaze(nextR) && isClearRight(nextR) && !isVisited(nextR)) {
-                distR = manhattan_distance(nextR, goal);
-                pointHeuristics.add(new PointHeuristic(nextR,distR));
+            next = crt.moveRight();
+            if (isInMaze(next) && isClearRight(next) && !isVisited(next)) {
+                dist = manhattan_distance(next, goal);
+                pointHeuristics.add(new PointHeuristic(next,dist));
                 wentSomewhere = true;
             }
 
-            nextD = crt.moveDown();
-            if (isInMaze(nextD) && isClearDown(nextD) && !isVisited(nextD)) {
-                distD = manhattan_distance(nextD, goal);
-                pointHeuristics.add(new PointHeuristic(nextD,distD));
+            next = crt.moveDown();
+            if (isInMaze(next) && isClearDown(next) && !isVisited(next)) {
+                dist = manhattan_distance(next, goal);
+                pointHeuristics.add(new PointHeuristic(next,dist));
                 wentSomewhere = true;
             }
 
-//            System.out.println("__________________________________________");
-//            System.out.println(pointHeuristics);
             Collections.sort(pointHeuristics,Collections.reverseOrder());
-//            System.out.println(pointHeuristics);
-//            System.out.println("__________________________________________");
 
             for (PointHeuristic point : pointHeuristics){
                 path_stack.push(point.getP());

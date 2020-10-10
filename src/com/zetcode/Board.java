@@ -34,7 +34,6 @@ public class Board extends JPanel implements ActionListener {
     private Color mazeColor;
 
     private boolean inGame = false;
-    private boolean dying = false;
 
     private final int BLOCK_SIZE = 24;
     private final int N_BLOCKS = 15;
@@ -43,13 +42,11 @@ public class Board extends JPanel implements ActionListener {
     private final int PACMAN_ANIM_COUNT = 4;
     private int DOT_X;
     private int DOT_Y;
-    private boolean CAN_MOVE = false;
 
     private int pacAnimCount = PAC_ANIM_DELAY;
     private int pacAnimDir = 1;
     private int pacmanAnimPos = 0;
     private int score;
-    private int[] dx, dy;
 
     private Image pacman1, pacman2up, pacman2left, pacman2right, pacman2down;
     private Image pacman3up, pacman3down, pacman3left, pacman3right;
@@ -57,7 +54,7 @@ public class Board extends JPanel implements ActionListener {
 
     int num = 0;
     private int pacman_x, pacman_y;
-    private int req_dx, req_dy, view_dx, view_dy;
+    private int view_dx, view_dy;
 
     private final short levelData[][] = {
             {3, 10, 10, 10,  2, 10, 10, 10, 10, 10, 10, 10,  2, 10,  6},
@@ -115,9 +112,6 @@ public class Board extends JPanel implements ActionListener {
         screenData = new short[N_BLOCKS][N_BLOCKS];
         mazeColor = new Color(5, 100, 5);
         d = new Dimension(400, 400);
-
-        dx = new int[4];
-        dy = new int[4];
 
         int x, y;
 
@@ -472,18 +466,6 @@ public class Board extends JPanel implements ActionListener {
 
             path = searcher.path;
             initGame();
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-            int key = e.getKeyCode();
-
-            if (key == Event.LEFT || key == Event.RIGHT
-                    || key == Event.UP || key == Event.DOWN) {
-                req_dx = 0;
-                req_dy = 0;
-            }
         }
     }
 

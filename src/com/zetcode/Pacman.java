@@ -20,7 +20,6 @@ public class Pacman extends JFrame {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-
             Pacman ex = new Pacman();
             ex.setVisible(true);
         });
