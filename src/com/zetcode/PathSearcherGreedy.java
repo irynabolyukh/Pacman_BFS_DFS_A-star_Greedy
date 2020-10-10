@@ -1,6 +1,5 @@
 package com.zetcode;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class PathSearcherGreedy extends PathSearcher {
