@@ -1,5 +1,7 @@
 package com.zetcode;
 
+import java.util.Objects;
+
 class MyPoint {
 
     private int x,y;
@@ -41,6 +43,20 @@ class MyPoint {
 
     public String toString() {
         return "x: " + getX() + ", y: " + getY() +", dir: " + getD();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyPoint myPoint = (MyPoint) o;
+        return x == myPoint.x &&
+                y == myPoint.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     public enum Direction{
