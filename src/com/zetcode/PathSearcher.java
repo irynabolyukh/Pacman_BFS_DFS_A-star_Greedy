@@ -53,6 +53,10 @@ public abstract class PathSearcher {
         }
     }
 
+    public double manhattan_distance(MyPoint next, MyPoint goal) {
+        return Math.abs(next.getX() - goal.getX()) + Math.abs(next.getY() - goal.getY());
+    }
+
     public boolean isGoalReached(int i, int j) {
         short ch;
         ch = screenData[j][i];
