@@ -51,7 +51,5 @@ public class PathSearcherGreedy extends PathSearcher {
 //        }
 //    }
 
-    private double manhattan_distance(MyPoint next, MyPoint goal) {
-        return Math.abs(next.getX() - goal.getX()) + Math.abs(next.getY() - goal.getY());
-    }
+
 }
