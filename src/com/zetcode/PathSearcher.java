@@ -29,6 +29,7 @@ public abstract class PathSearcher {
     public List<MyPoint> path = new ArrayList<MyPoint>();
     public Stack<MyPoint> path_stack = new Stack<MyPoint>();
     public LinkedList<MyPoint> path_queue = new LinkedList<MyPoint>();
+    public MyPoint goal;
 
     public int[][] isVisited = new int[15][15];
 
@@ -38,6 +39,19 @@ public abstract class PathSearcher {
     int totalSteps;
 
     long totalUsedMemory, totalUsedMemoryInBytes;
+
+    public void findGoal(){
+        short ch;
+        for (int i = 0; i < 15; i++) {
+            for(int j =0; j< 15; j++){
+                ch = screenData[i][j];
+                if ((ch & 16) != 0){
+                    goal = new MyPoint(j,i, MyPoint.Direction.STILL);
+                    System.out.println(goal);
+                }
+            }
+        }
+    }
 
     public boolean isGoalReached(int i, int j) {
         short ch;
