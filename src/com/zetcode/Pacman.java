@@ -6,12 +6,10 @@ import javax.swing.JFrame;
 public class Pacman extends JFrame {
 
     public Pacman() {
-
         initUI();
     }
 
     private void initUI() {
-
         add(new Board());
 
         setTitle("Pacman");
@@ -21,18 +19,6 @@ public class Pacman extends JFrame {
     }
 
     public static void main(String[] args) {
-
-//        PathSearcherBFS searcherBFS = new PathSearcherBFS();
-//        searcherBFS.searchForPath();
-//        System.out.println("ALL VISITED:");
-//        for(int i=0;i<searcherBFS.path.size();i++){
-//            System.out.println(searcherBFS.path.get(i));
-//        }
-//        System.out.println("\n\nRIGHT PATH:");
-//        for(int i=0;i<searcherBFS.path_stack.size();i++){
-//            System.out.println(searcherBFS.path_stack.get(i));
-//        }
-
         EventQueue.invokeLater(() -> {
 
             Pacman ex = new Pacman();
