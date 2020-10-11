@@ -29,7 +29,6 @@ public abstract class PathSearcher {
                 ch = screenData[i][j];
                 if ((ch & 16) != 0){
                     goal = new MyPoint(j,i, MyPoint.Direction.STILL);
-                    System.out.println(goal);
                 }
             }
         }
