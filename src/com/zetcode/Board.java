@@ -83,7 +83,7 @@ public class Board extends JPanel implements ActionListener {
             {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
             {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
             {0,  5,  0,  9, 10, 10,  8, 10, 12,  0,  0,  0,  5,  0,  5},
-            {0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9,  5,  4},
+            {0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 13,  0,  5},
             {0,  9, 10, 10, 10, 10, 10, 10, 10, 10,  6,  0,  0,  0,  5},
             {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10, 10, 10, 12}
     };
@@ -203,17 +203,20 @@ public class Board extends JPanel implements ActionListener {
     private void showIntroScreen(Graphics2D g2d) {
 
         g2d.setColor(new Color(0, 32, 48));
-        g2d.fillRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
+        g2d.fillRect(50, SCREEN_SIZE / 2 - 60, SCREEN_SIZE - 100, 80);
         g2d.setColor(Color.white);
-        g2d.drawRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
+        g2d.drawRect(50, SCREEN_SIZE / 2 - 60, SCREEN_SIZE - 100, 80);
 
-        String s = "Press B for BFS or D for DFS";
+        String s = "Press B for BFS, D for DFS,";
+        String s2 = "G for Greedy or A for A*";
+
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
 
         g2d.setColor(Color.white);
         g2d.setFont(small);
-        g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
+        g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2 - metr.getHeight()/2*3);
+        g2d.drawString(s2, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
     }
 
     private void drawScore(Graphics2D g) {
@@ -645,6 +648,11 @@ public class Board extends JPanel implements ActionListener {
                 if (key == 'd' || key == 'D') {
                     inGame = true;
                     searcher = new PathSearcherDFS();
+                    chosenSearcher();
+                }
+                if (key == 'a' || key == 'A') {
+                    inGame = true;
+                    searcher = new PathSearcherAStar();
                     chosenSearcher();
                 }
             }
