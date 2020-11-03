@@ -34,6 +34,7 @@ public class Board extends JPanel implements ActionListener {
 
     private boolean inGame = false;
     private boolean dying = false;
+    int step = 1;
 
     private final int STARS_AMOUNT = 1;
 
@@ -365,6 +366,7 @@ public class Board extends JPanel implements ActionListener {
                 moveGhostRight(i);
             }
         }
+        step++;
     }
 
     private void movePacman(){
@@ -434,6 +436,7 @@ public class Board extends JPanel implements ActionListener {
 //            pointHeuristics.clear();
 
 //        }
+        step++;
     }
 
     private void moveTo(int x, int y, MyPoint.Direction d){
@@ -858,11 +861,13 @@ public class Board extends JPanel implements ActionListener {
             int key = e.getKeyCode();
 
             if (inGame) {
-                if (key == KeyEvent.VK_LEFT) {
-                    movePacman();
-//                    movePackLeft();
-//                    moveGhosts();
-//               moveGhostLeft();
+                if (key == KeyEvent.VK_SPACE) {
+                    if(step %2 == 0){
+                        movePacman();
+                    }
+                    else{
+                        moveGhosts();
+                    }
                 } else if (key == KeyEvent.VK_RIGHT) {
                     movePackRight();
                     moveGhosts();
