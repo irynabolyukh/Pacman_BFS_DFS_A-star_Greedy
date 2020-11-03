@@ -6,12 +6,10 @@ import javax.swing.JFrame;
 public class Pacman extends JFrame {
 
     public Pacman() {
-
         initUI();
     }
 
     private void initUI() {
-
         add(new Board());
 
         setTitle("Pacman");
@@ -21,7 +19,6 @@ public class Pacman extends JFrame {
     }
 
     public static void main(String[] args) {
-
         EventQueue.invokeLater(() -> {
 
             Pacman ex = new Pacman();
