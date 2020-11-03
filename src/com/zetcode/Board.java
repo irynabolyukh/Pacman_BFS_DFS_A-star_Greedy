@@ -441,7 +441,7 @@ public class Board extends JPanel implements ActionListener {
     private void drawPacman(Graphics2D g2d) {
 
         if (view_dx == -1) {
-            drawPacnanLeft(g2d);
+            drawPacmanLeft(g2d);
         } else if (view_dx == 1) {
             drawPacmanRight(g2d);
         } else if (view_dy == -1) {
@@ -487,7 +487,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void drawPacnanLeft(Graphics2D g2d) {
+    private void drawPacmanLeft(Graphics2D g2d) {
 
         switch (pacmanAnimPos) {
             case 1:
