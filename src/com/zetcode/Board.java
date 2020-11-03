@@ -86,14 +86,14 @@ public class Board extends JPanel implements ActionListener {
            {1, 10, 10, 10, 12,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
            {5,  0,  0,  0,  0,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
            {9,  2, 10,  2, 10, 10, 12,  0,  9, 10,  8,  6,  0,  0,  5},
-           {1,  5,  0,  5,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  5},
-           {1,  5,  0,  1, 10, 10,  6,  0,  3, 10, 10,  8,  6,  0,  5},
-           {1,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
-           {1,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
-           {1,  5,  0,  9, 10, 10,  8, 10, 12,  0,  0,  0,  5,  0,  5},
-           {1,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10,  4},
-           {1,  9, 10, 10, 10, 10, 10, 10, 10, 10,  6,  0,  0,  0,  5},
-           {9,  8,  8,  8,  8,  8,  8,  8,  8,  8,  9, 10, 10, 10, 12}
+           {0,  5,  0,  5,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  5},
+           {0,  5,  0,  1, 10, 10,  6,  0,  3, 10, 10,  8,  6,  0,  5},
+           {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
+           {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
+           {0,  5,  0,  9, 10, 10,  8, 10, 12,  0,  0,  0,  5,  0,  5},
+           {0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 13,  0,  5},
+           {0,  9, 10, 10, 10, 10, 10, 10, 10, 10,  6,  0,  0,  0,  5},
+           {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10, 10, 10, 12}
    };
 
    private final short blocksData[][] = {
@@ -194,7 +194,7 @@ public class Board extends JPanel implements ActionListener {
 //        } else {
 
 
-//            movePacman();  // moving Packman without pressing keys
+//            movePacman();  // moving Pacman without pressing keys
       drawPacman(g2d);
       drawGhost(g2d);
       drawInfo(g2d);
@@ -252,20 +252,20 @@ public class Board extends JPanel implements ActionListener {
    private void checkMaze() {
 
 //        short i = 0;
-      boolean finished = true;
+      boolean notFinished = true;
 
-      while (finished) {
+      while (notFinished) {
 
          for(short i = 0; i< 15; i++){
             for(short j =0; j< 15; j++){
                if ((screenData[i][j] & 16) != 0) {
-                  finished = false;
+                  notFinished = false;
                }
             }
          }
       }
 
-      if (finished) {
+      if (notFinished) {
 
          score += 50;
 
