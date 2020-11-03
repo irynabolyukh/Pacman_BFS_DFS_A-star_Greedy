@@ -388,6 +388,7 @@ public class Board extends JPanel implements ActionListener {
 ////
 ////        g2d.drawImage(ghost, x, y, this);
 ////    }
+
    private void moveGhostLeft() {
       if (canMoveLeft(ghost_x, ghost_y)) {
          ghost_x -= 24;
@@ -844,5 +845,5 @@ public class Board extends JPanel implements ActionListener {
       repaint();
    }
 
-   
+
 }
