@@ -13,6 +13,9 @@ class MyPoint {
         this.d = d;
     }
 
+    public MyPoint(){
+    }
+
     public int getX() {
         return x;
     }
