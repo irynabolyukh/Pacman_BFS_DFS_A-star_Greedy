@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -31,6 +32,8 @@ public class Board extends JPanel implements ActionListener {
 
    private boolean inGame = false;
    private boolean dying = false;
+
+   private final int STARS_AMOUNT = 1;
 
    private final int BLOCK_SIZE = 24;
    private final int N_BLOCKS = 15;
@@ -79,21 +82,21 @@ public class Board extends JPanel implements ActionListener {
 //            9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 25, 24, 24, 24, 28
 //    };
    private final short levelData[][] = {
-           {3, 10, 10, 10,  2, 10, 10, 10, 10, 10, 10, 10,  2, 10,  6},
-           {5,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  5,  0,  5},
-           {5,  0,  0,  0,  5,  0,  3, 10,  6,  0,  3, 10, 12,  0,  5},
-           {5,  0,  0,  0,  5,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
-           {1, 10, 10, 10, 12,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
-           {5,  0,  0,  0,  0,  0,  5,  0,  5,  0,  5,  0,  0,  0,  5},
-           {9,  2, 10,  2, 10, 10, 12,  0,  9, 10,  8,  6,  0,  0,  5},
-           {0,  5,  0,  5,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  5},
-           {0,  5,  0,  1, 10, 10,  6,  0,  3, 10, 10,  8,  6,  0,  5},
-           {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
-           {0,  5,  0,  5,  0,  0,  5,  0,  5,  0,  0,  0,  5,  0,  5},
-           {0,  5,  0,  9, 10, 10,  8, 10, 12,  0,  0,  0,  5,  0,  5},
-           {0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 13,  0,  5},
-           {0,  9, 10, 10, 10, 10, 10, 10, 10, 10,  6,  0,  0,  0,  5},
-           {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9, 10, 10, 10, 12}
+           {3, 10, 10, 10, 2, 10, 10, 10, 10, 10, 10, 10, 2, 10, 6},
+           {5, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
+           {5, 0, 0, 0, 5, 0, 3, 10, 6, 0, 3, 10, 12, 0, 5},
+           {5, 0, 0, 0, 5, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+           {1, 10, 10, 10, 12, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+           {5, 0, 0, 0, 0, 0, 5, 0, 5, 0, 5, 0, 0, 0, 5},
+           {9, 2, 10, 2, 10, 10, 12, 0, 9, 10, 8, 6, 0, 0, 5},
+           {0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
+           {0, 5, 0, 1, 10, 10, 6, 0, 3, 10, 10, 8, 6, 0, 5},
+           {0, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
+           {0, 5, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 5, 0, 5},
+           {0, 5, 0, 9, 10, 10, 8, 10, 12, 0, 0, 0, 5, 0, 5},
+           {0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 5},
+           {0, 9, 10, 10, 10, 10, 10, 10, 10, 10, 6, 0, 0, 0, 5},
+           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 10, 10, 12}
    };
 
    private final short blocksData[][] = {
@@ -140,24 +143,32 @@ public class Board extends JPanel implements ActionListener {
       screenData = new short[N_BLOCKS][N_BLOCKS];
       mazeColor = new Color(5, 100, 5);
       d = new Dimension(400, 400);
-      ghost_x = 24*8;
-      ghost_y = 24*6;
+      ghost_x = 24 * 8;
+      ghost_y = 24 * 6;
       dx = new int[4];
       dy = new int[4];
 
-      int x, y;
+//      int x, y;
 
-      Random r = new Random();
+//      Random r = new Random();
 
-      do{
-         x = r.nextInt(15);
-         y = r.nextInt(15);
-      }while(blocksData[y][x]==0);
-
-      DOT_X = x*24;
-      DOT_Y = y*24;
-
-      levelData[y][x] +=16;
+      for(int x=0; x<15; x++){
+         for(int y=0; y<15; y++){
+            if(blocksData[y][x] != 0){
+               levelData[y][x] += 16;
+            }
+         }
+      }
+//      System.out.println(Arrays.toString(levelData));
+//      do {
+//         x = r.nextInt(15);
+//         y = r.nextInt(15);
+//      } while (blocksData[y][x] == 0);
+//
+//      DOT_X = x * 24;
+//      DOT_Y = y * 24;
+//
+//      levelData[y][x] += 16;
 
       timer = new Timer(40, this);
       timer.start();
@@ -252,20 +263,28 @@ public class Board extends JPanel implements ActionListener {
    private void checkMaze() {
 
 //        short i = 0;
-      boolean notFinished = true;
+      boolean finished = true;
+//
+//      if(score == STARS_AMOUNT){
+//         finished = false;
+//      }
 
-      while (notFinished) {
-
+      while (finished) {
+//
+//         if (score < STARS_AMOUNT) {
+//            finished = false;
+//         }
+//
          for(short i = 0; i< 15; i++){
             for(short j =0; j< 15; j++){
                if ((screenData[i][j] & 16) != 0) {
-                  notFinished = false;
+                  finished = false;
                }
             }
          }
       }
 
-      if (notFinished) {
+      if (finished) {
 
          score += 50;
 
@@ -369,57 +388,63 @@ public class Board extends JPanel implements ActionListener {
 ////
 ////        g2d.drawImage(ghost, x, y, this);
 ////    }
-   private void moveGhostLeft(){
-      if(canMoveLeft(ghost_x, ghost_y)){
-         ghost_x -=24;
+   private void moveGhostLeft() {
+      if (canMoveLeft(ghost_x, ghost_y)) {
+         ghost_x -= 24;
       }
    }
-   private void moveGhostRight(){
-      if(canMoveRight(ghost_x, ghost_y)){
-         ghost_x +=24;
+
+   private void moveGhostRight() {
+      if (canMoveRight(ghost_x, ghost_y)) {
+         ghost_x += 24;
       }
    }
-   private void moveGhostUp(){
-      if(canMoveUp(ghost_x, ghost_y)){
-         ghost_y -=24;
+
+   private void moveGhostUp() {
+      if (canMoveUp(ghost_x, ghost_y)) {
+         ghost_y -= 24;
       }
    }
-   private void moveGhostDown(){
-      if(canMoveDown(ghost_x, ghost_y)){
+
+   private void moveGhostDown() {
+      if (canMoveDown(ghost_x, ghost_y)) {
          ghost_y += 24;
       }
    }
 
-   private void movePackLeft(){
+   private void movePackLeft() {
       isGoalReached();
-      if(canMoveLeft(pacman_x, pacman_y)){
-         pacman_x -=24;
+      if (canMoveLeft(pacman_x, pacman_y)) {
+         pacman_x -= 24;
          view_dx = -1;
       }
    }
-   private void movePackRight(){
+
+   private void movePackRight() {
       isGoalReached();
-      if(canMoveRight(pacman_x, pacman_y)){
-         pacman_x +=24;
+      if (canMoveRight(pacman_x, pacman_y)) {
+         pacman_x += 24;
          view_dx = 1;
       }
    }
-   private void movePackUp(){
+
+   private void movePackUp() {
       isGoalReached();
-      if(canMoveUp(pacman_x, pacman_y)){
-         pacman_y -=24;
+      if (canMoveUp(pacman_x, pacman_y)) {
+         pacman_y -= 24;
          view_dy = -1;
       }
    }
-   private void movePackDown(){
+
+   private void movePackDown() {
       isGoalReached();
-      if(canMoveDown(pacman_x, pacman_y)){
+      if (canMoveDown(pacman_x, pacman_y)) {
          pacman_y += 24;
          view_dy = 1;
       }
    }
 
-   private void isGoalReached(){
+   private void isGoalReached() {
       int pos_i, pos_j;
       short ch;
       if (pacman_x % BLOCK_SIZE == 0 && pacman_y % BLOCK_SIZE == 0) {
@@ -434,7 +459,7 @@ public class Board extends JPanel implements ActionListener {
       }
    }
 
-   private boolean canMoveLeft(int cord_x, int cord_y){
+   private boolean canMoveLeft(int cord_x, int cord_y) {
       int pos_i, pos_j;
       short ch;
       pos_i = cord_x / BLOCK_SIZE;
@@ -443,7 +468,8 @@ public class Board extends JPanel implements ActionListener {
 
       return ((ch & 1) == 0);
    }
-   private boolean canMoveUp(int cord_x, int cord_y){
+
+   private boolean canMoveUp(int cord_x, int cord_y) {
       int pos_i, pos_j;
       short ch;
       pos_i = cord_x / BLOCK_SIZE;
@@ -452,7 +478,8 @@ public class Board extends JPanel implements ActionListener {
 
       return ((ch & 2) == 0);
    }
-   private boolean canMoveRight(int cord_x, int cord_y){
+
+   private boolean canMoveRight(int cord_x, int cord_y) {
       int pos_i, pos_j;
       short ch;
       pos_i = cord_x / BLOCK_SIZE;
@@ -461,7 +488,8 @@ public class Board extends JPanel implements ActionListener {
 
       return ((ch & 4) == 0);
    }
-   private boolean canMoveDown(int cord_x, int cord_y){
+
+   private boolean canMoveDown(int cord_x, int cord_y) {
       int pos_i, pos_j;
       short ch;
       pos_i = cord_x / BLOCK_SIZE;
@@ -614,8 +642,8 @@ public class Board extends JPanel implements ActionListener {
       int x, y;
 
       for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
-         int j = y/BLOCK_SIZE;
-         i=0;
+         int j = y / BLOCK_SIZE;
+         i = 0;
 
          for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
 
@@ -643,7 +671,7 @@ public class Board extends JPanel implements ActionListener {
 
             if ((screenData[j][i] & 16) != 0) {
                g2d.setColor(dotColor);
-               g2d.fillRect(DOT_X + 11, DOT_Y + 11, 2, 2);
+               g2d.fillRect(x + 11, y + 11, 2, 2);
             }
 
             i++;
@@ -664,7 +692,7 @@ public class Board extends JPanel implements ActionListener {
    private void initLevel() {
 //        int i;
       for (int i = 0; i < N_BLOCKS; i++) {
-         for(int j =0; j<N_BLOCKS; j++){
+         for (int j = 0; j < N_BLOCKS; j++) {
             screenData[i][j] = levelData[i][j];
          }
       }
@@ -815,4 +843,6 @@ public class Board extends JPanel implements ActionListener {
 
       repaint();
    }
+
+   
 }
