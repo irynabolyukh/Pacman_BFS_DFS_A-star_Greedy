@@ -14,6 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -60,7 +64,7 @@ public class Board extends JPanel implements ActionListener {
 
     //   private int ghost_x, ghost_y;
     private int pacman_x, pacman_y, pacmand_x, pacmand_y;
-    private int req_dx, req_dy, view_dx, view_dy;
+    private int view_dx, view_dy;
 
     //    private final short levelData[] = {
 //            19, 26, 26, 26, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22,
@@ -110,7 +114,7 @@ public class Board extends JPanel implements ActionListener {
             {0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1},
             {0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1},
             {0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1}
     };
@@ -317,6 +321,38 @@ public class Board extends JPanel implements ActionListener {
 //        continueLevel();
 //    }
 
+    private int manhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x2-x1) + Math.abs(y2-y1);
+    }
+
+//    private int distBtwPacAndGhost(int ghostNum){
+//        return manhattanDistance(pacman_x, pacman_y, ghost_x[ghostNum], ghost_y[ghostNum]);
+//    }
+
+    private int pointCost(int x, int y){
+
+        short ch = screenData[y][x];
+
+        if ((ch & 16) == 0) {
+            return 5;
+        }
+        return 0;
+    }
+
+    private int pointCost(MyPoint p){
+
+        short ch = screenData[p.getY()][p.getX()];
+
+        if ((ch & 16) != 0) {
+            return 100;
+        }
+        return 0;
+    }
+
+//    private int[] closestStar(int ghostNum ){
+//
+//    }
+
     private void moveGhosts() {
         for (int i = 0; i < ghost_x.length; i++) {
             if (canMoveDown(ghost_x[i], ghost_y[i])) {
@@ -333,7 +369,92 @@ public class Board extends JPanel implements ActionListener {
 
     private void movePacman(){
 
+        MyPoint crt;
+        MyPoint next;
+        double distTo0, distTo1;
+        boolean wentSomewhere;
+        List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
+
+//        Stack<MyPoint> path_stack = new Stack<MyPoint>();
+//        path_stack.push(new MyPoint(pacman_x,pacman_y));
+
+//        while (!path_stack.empty()) {
+
+            crt = new MyPoint(pacman_x/BLOCK_SIZE,pacman_y/BLOCK_SIZE, MyPoint.Direction.STILL);
+
+//            path.add(crt);
+
+//            if (isGoalReached(crt)) {
+//                break;
+//            }
+
+//            markVisited(crt);
+
+//            wentSomewhere = false;
+
+            next = crt.moveLeft();
+            if (canMoveLeft(pacman_x,pacman_y)) {
+                distTo0 = manhattanDistance(next.getX(),next.getY(),ghost_x[0]/BLOCK_SIZE,ghost_y[0]/BLOCK_SIZE);
+                distTo1 = manhattanDistance(next.getX(),next.getY(),ghost_x[1]/BLOCK_SIZE,ghost_y[1]/BLOCK_SIZE);
+                pointHeuristics.add(new PointHeuristic(next,pointCost(next)+((distTo0<distTo1)?distTo0:distTo1)));
+            }
+
+            next = crt.moveUp();
+            if (canMoveUp(pacman_x,pacman_y)) {
+                distTo0 = manhattanDistance(next.getX(),next.getY(),ghost_x[0]/BLOCK_SIZE,ghost_y[0]/BLOCK_SIZE);
+                distTo1 = manhattanDistance(next.getX(),next.getY(),ghost_x[1]/BLOCK_SIZE,ghost_y[1]/BLOCK_SIZE);
+                pointHeuristics.add(new PointHeuristic(next,pointCost(next)+((distTo0<distTo1)?distTo0:distTo1)));
+            }
+
+            next = crt.moveRight();
+            if (canMoveRight(pacman_x,pacman_y)) {
+                distTo0 = manhattanDistance(next.getX(),next.getY(),ghost_x[0]/BLOCK_SIZE,ghost_y[0]/BLOCK_SIZE);
+                distTo1 = manhattanDistance(next.getX(),next.getY(),ghost_x[1]/BLOCK_SIZE,ghost_y[1]/BLOCK_SIZE);
+                pointHeuristics.add(new PointHeuristic(next,pointCost(next)+((distTo0<distTo1)?distTo0:distTo1)));
+            }
+
+            next = crt.moveDown();
+            if (canMoveDown(pacman_x,pacman_y)) {
+                distTo0 = manhattanDistance(next.getX(),next.getY(),ghost_x[0]/BLOCK_SIZE,ghost_y[0]/BLOCK_SIZE);
+                distTo1 = manhattanDistance(next.getX(),next.getY(),ghost_x[1]/BLOCK_SIZE,ghost_y[1]/BLOCK_SIZE);
+                pointHeuristics.add(new PointHeuristic(next,pointCost(next)+((distTo0<distTo1)?distTo0:distTo1)));
+            }
+
+            Collections.sort(pointHeuristics, Collections.reverseOrder());
+        System.out.println(pointHeuristics);
+
+            MyPoint moveTo = pointHeuristics.get(0).getP();
+
+            moveTo(moveTo.getX(), moveTo.getY(), moveTo.getD());
+
+//            for (PointHeuristic point : pointHeuristics){
+//                path_stack.push(point.getP());
+//            }
+
+//            pointHeuristics.clear();
+
+//        }
     }
+
+    private void moveTo(int x, int y, MyPoint.Direction d){
+
+        isGoalReached();
+
+        switch (d){
+            case LEFT: view_dx = -1;
+                break;
+            case RIGHT: view_dx = 1;
+                break;
+            case UP: view_dy = -1;
+                break;
+            case DOWN: view_dy = 1;
+                break;
+        }
+        pacman_x = 24*x;
+        pacman_y = 24*y;
+
+    }
+
 
     private void moveGhostLeft(int ghostNum) {
         if (canMoveLeft(ghost_x[ghostNum], ghost_y[ghostNum])) {
@@ -738,26 +859,19 @@ public class Board extends JPanel implements ActionListener {
 
             if (inGame) {
                 if (key == KeyEvent.VK_LEFT) {
-                    req_dx = -1;
-                    req_dy = 0;
-                    movePackLeft();
-                    moveGhosts();
+                    movePacman();
+//                    movePackLeft();
+//                    moveGhosts();
 //               moveGhostLeft();
                 } else if (key == KeyEvent.VK_RIGHT) {
-                    req_dx = 1;
-                    req_dy = 0;
                     movePackRight();
                     moveGhosts();
 //               moveGhostRight();
                 } else if (key == KeyEvent.VK_UP) {
-                    req_dx = 0;
-                    req_dy = -1;
                     movePackUp();
                     moveGhosts();
 //               moveGhostUp();
                 } else if (key == KeyEvent.VK_DOWN) {
-                    req_dx = 0;
-                    req_dy = 1;
                     movePackDown();
                     moveGhosts();
 //               moveGhostDown();
@@ -785,8 +899,6 @@ public class Board extends JPanel implements ActionListener {
 
             if (key == Event.LEFT || key == Event.RIGHT
                     || key == Event.UP || key == Event.DOWN) {
-                req_dx = 0;
-                req_dy = 0;
             }
         }
     }
