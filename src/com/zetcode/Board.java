@@ -361,8 +361,9 @@ public class Board extends JPanel implements ActionListener {
 
       distTo0 = manhattanDistance(crt.getX(), crt.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
       distTo1 = manhattanDistance(crt.getX(), crt.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-
-      if (distTo0 > 6 && distTo1 > 6){
+//якщо манхетенська відстань більше 10, то можемо не звертати уваги
+      //пошук в глибину з заглибленням на 5 кроків
+      if (distTo0 > 7 && distTo1 > 7){
          next = crt.moveLeft();
          if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
             pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
