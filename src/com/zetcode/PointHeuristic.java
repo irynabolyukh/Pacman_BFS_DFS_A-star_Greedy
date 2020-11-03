@@ -6,14 +6,14 @@ public class PointHeuristic implements Comparable<PointHeuristic>{
         return p;
     }
 
-    public Double getValue() {
+    public Integer getValue() {
         return value;
     }
 
     private MyPoint p;
-    private Double value;
+    private Integer value;
 
-    public PointHeuristic(MyPoint p, Double value){
+    public PointHeuristic(MyPoint p, Integer value){
         this.p = p;
         this.value = value;
     }

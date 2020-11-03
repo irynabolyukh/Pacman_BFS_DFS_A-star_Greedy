@@ -64,14 +64,32 @@ public class Board extends JPanel implements ActionListener {
            {1, 0, 0, 0, 0, 0, 4, 0, 1, 0, 4, 0, 0, 0, 5},
            {9, 0, 8, 0, 8, 8, 12, 0, 9, 8, 8, 6, 0, 0, 5},
            {0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
-           {0, 5, 0, 1, 2, 2, 6, 0, 3, 10, 10, 8, 6, 0, 5},
-           {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 5, 0, 5},
-           {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 5, 0, 5},
-           {0, 5, 0, 9, 8, 8, 8, 10, 12, 0, 0, 0, 5, 0, 5},
-           {0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5},
-           {0, 9, 10, 10, 10, 10, 10, 10, 10, 10, 6, 0, 5, 0, 5},
-           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 8, 10, 12}
+           {0, 5, 0, 1, 2, 2, 6, 0, 3, 10, 10, 8, 6, 8, 5},
+           {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 1, 0, 4},
+           {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 1, 0, 4},
+           {0, 5, 0, 9, 0, 0, 8, 10, 12, 0, 0, 0, 1, 0, 4},
+           {0, 5, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 1, 0, 4},
+           {0, 9, 10, 10, 8, 8, 10, 10, 10, 10, 6, 0, 1, 0, 4},
+           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 8, 8, 12}
    };
+
+//   private final short levelData[][] = {
+//           {3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+//           {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 12}
+//   };
 
    private final short blocksData[][] = {
            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -83,13 +101,30 @@ public class Board extends JPanel implements ActionListener {
            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1},
            {0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
            {0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
-           {0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
-           {0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
-           {0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-           {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
+           {0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1},
+           {0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1},
+           {0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1},
+           {0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1},
+           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1}
    };
+//private final short blocksData[][] = {
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+//};
 
    private final int validSpeeds[] = {1, 2, 3, 4, 6, 8};
    private final int maxSpeed = 6;
@@ -244,7 +279,7 @@ public class Board extends JPanel implements ActionListener {
       short ch = screenData[p.getY()][p.getX()];
 
       if ((ch & 16) != 0) {
-         return 100;
+         return 1;
       }
       return 0;
    }
@@ -255,7 +290,7 @@ public class Board extends JPanel implements ActionListener {
       MyPoint crt;
       MyPoint next;
       MyPoint g0 = new MyPoint();
-      double distTo;
+      int distTo;
       List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
 
       for (int i = 0; i < ghost_x.length; i++) {
@@ -315,7 +350,7 @@ public class Board extends JPanel implements ActionListener {
 
       MyPoint crt;
       MyPoint next;
-      double distTo0, distTo1;
+      int distTo0, distTo1;
       List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
       int gh_x0 = ghost_x[0];
       int gh_y0 = ghost_y[0];
@@ -324,33 +359,59 @@ public class Board extends JPanel implements ActionListener {
 
       crt = new MyPoint(pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE, MyPoint.Direction.STILL);
 
+      distTo0 = manhattanDistance(crt.getX(), crt.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+      distTo1 = manhattanDistance(crt.getX(), crt.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
 
-      next = crt.moveLeft();
-      if (canMoveLeft(pacman_x, pacman_y)) {
-         distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-         distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-         pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
+      if (distTo0 > 6 && distTo1 > 6){
+         next = crt.moveLeft();
+         if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
+         }
+
+         next = crt.moveUp();
+         if (canMoveUp(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
+         }
+
+         next = crt.moveRight();
+         if (canMoveRight(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
+         }
+
+         next = crt.moveDown();
+         if (canMoveDown(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
+         }
       }
 
-      next = crt.moveUp();
-      if (canMoveUp(pacman_x, pacman_y)) {
-         distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-         distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-         pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
-      }
+      else{
+         next = crt.moveLeft();
+         if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
+         }
 
-      next = crt.moveRight();
-      if (canMoveRight(pacman_x, pacman_y)) {
-         distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-         distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-         pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
-      }
+         next = crt.moveUp();
+         if (canMoveUp(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
+         }
 
-      next = crt.moveDown();
-      if (canMoveDown(pacman_x, pacman_y)) {
-         distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-         distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-         pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
+         next = crt.moveRight();
+         if (canMoveRight(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
+         }
+
+         next = crt.moveDown();
+         if (canMoveDown(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
+         }
       }
 
       Collections.sort(pointHeuristics, Collections.reverseOrder());
@@ -440,6 +501,15 @@ public class Board extends JPanel implements ActionListener {
       ch = screenData[pos_j][pos_i];
 
       return ((ch & 8) == 0);
+   }
+
+   private boolean notGhost(int cord_x, int cord_y){
+      for(int i=0; i < ghost_x.length; i++){
+         if(cord_x==ghost_x[i] && cord_y==ghost_y[i]){
+            return false;
+         }
+      }
+      return true;
    }
 
    private void drawPacman(Graphics2D g2d) {
