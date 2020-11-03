@@ -370,25 +370,21 @@ public class Board extends JPanel implements ActionListener {
 ////        g2d.drawImage(ghost, x, y, this);
 ////    }
    private void moveGhostLeft(){
-      isGoalReached();
       if(canMoveLeft(ghost_x, ghost_y)){
          ghost_x -=24;
       }
    }
    private void moveGhostRight(){
-      isGoalReached();
       if(canMoveRight(ghost_x, ghost_y)){
          ghost_x +=24;
       }
    }
    private void moveGhostUp(){
-      isGoalReached();
       if(canMoveUp(ghost_x, ghost_y)){
          ghost_y -=24;
       }
    }
    private void moveGhostDown(){
-      isGoalReached();
       if(canMoveDown(ghost_x, ghost_y)){
          ghost_y += 24;
       }
