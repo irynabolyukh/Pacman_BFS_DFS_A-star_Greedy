@@ -18,6 +18,13 @@ public class PointHeuristic implements Comparable<PointHeuristic>{
         this.value = value;
     }
 
+    public PointHeuristic(){
+    }
+
+    public PointHeuristic(Integer value){
+        this.value = value;
+    }
+
     @Override
     public int compareTo(PointHeuristic o) {
         return this.getValue().compareTo(o.getValue());
