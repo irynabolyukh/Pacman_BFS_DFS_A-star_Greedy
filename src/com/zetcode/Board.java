@@ -287,38 +287,51 @@ public class Board extends JPanel implements ActionListener {
 
    private void moveGhosts() {
 
-      MyPoint crt;
       MyPoint next;
-      MyPoint g0 = new MyPoint();
-      int distTo;
-      List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
+      MyPoint pacCords = new MyPoint(pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE, MyPoint.Direction.STILL);
 
       for (int i = 0; i < ghost_x.length; i++) {
-         pointHeuristics.clear();
+         next = (min(pacCords, ghost_x[i], ghost_y[i], 3)).getP();
+         ghost_x[i] = next.getX() * 24;
+         ghost_y[i] = next.getY() * 24;
+      }
+      step++;
+   }
 
-         crt = new MyPoint(ghost_x[i] / BLOCK_SIZE, ghost_y[i] / BLOCK_SIZE, MyPoint.Direction.STILL);
+   private PointHeuristic min(MyPoint pacCords, int ghost_x, int ghost_y, int depth) {
+      MyPoint crt;
+      MyPoint next;
+      int value;
+      List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
+
+      if (depth == 0) {
+         return new PointHeuristic(0);
+      } else {
+
+         crt = new MyPoint(ghost_x / BLOCK_SIZE, ghost_y / BLOCK_SIZE, MyPoint.Direction.STILL);
 
          next = crt.moveLeft();
-         if (canMoveLeft(ghost_x[i], ghost_y[i])) {
-            distTo = manhattanDistance(next.getX(), next.getY(), pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE);
-            pointHeuristics.add(new PointHeuristic(next, distTo));
+         if (canMoveLeft(ghost_x, ghost_y)) {
+            value = manhattanDistance(next.getX(), next.getY(), pacCords.getX() / BLOCK_SIZE, pacCords.getY() / BLOCK_SIZE)
+                    + min(max().getP(),next.getX(),next.getY(),depth-1);
+            pointHeuristics.add(new PointHeuristic(next, value));
          }
 
          next = crt.moveUp();
          if (canMoveUp(ghost_x[i], ghost_y[i])) {
-            distTo = manhattanDistance(next.getX(), next.getY(), pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE);
+            distTo = manhattanDistance(next.getX(), next.getY(), pacCords.getX() / BLOCK_SIZE, pacCords.getY() / BLOCK_SIZE);
             pointHeuristics.add(new PointHeuristic(next, distTo));
          }
 
          next = crt.moveRight();
          if (canMoveRight(ghost_x[i], ghost_y[i])) {
-            distTo = manhattanDistance(next.getX(), next.getY(), pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE);
+            distTo = manhattanDistance(next.getX(), next.getY(), pacCords.getX() / BLOCK_SIZE, pacCords.getY() / BLOCK_SIZE);
             pointHeuristics.add(new PointHeuristic(next, distTo));
          }
 
          next = crt.moveDown();
          if (canMoveDown(ghost_x[i], ghost_y[i])) {
-            distTo = manhattanDistance(next.getX(), next.getY(), pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE);
+            distTo = manhattanDistance(next.getX(), next.getY(), pacCords.getX() / BLOCK_SIZE, pacCords.getY() / BLOCK_SIZE);
             pointHeuristics.add(new PointHeuristic(next, distTo));
          }
 
@@ -329,27 +342,85 @@ public class Board extends JPanel implements ActionListener {
 
          MyPoint moveTo = pointHeuristics.get(ran).getP();
 
-         if (i == 0) {
-            ghost_x[i] = moveTo.getX() * 24;
-            ghost_y[i] = moveTo.getY() * 24;
-            g0 = moveTo;
-
-         } else {
-            while (g0.equals(moveTo)) {
-               ran = r.nextInt(2);
-               moveTo = pointHeuristics.get(ran).getP();
-            }
-            ghost_x[i] = moveTo.getX() * 24;
-            ghost_y[i] = moveTo.getY() * 24;
-         }
       }
-      step++;
+      return new PointHeuristic(0);
+   }
+//returns best Ghost coordinates
+
+   private PointHeuristic max(MyPoint pacCords, int[] ghost_x, int[] ghost_y, int depth) {
+
+      MyPoint next;
+      int distTo0, distTo1;
+      List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
+      int gh_x0 = ghost_x[0];
+      int gh_y0 = ghost_y[0];
+      int gh_x1 = ghost_x[1];
+      int gh_y1 = ghost_y[1];
+      int value;
+      PointHeuristic ghost0_next;
+      PointHeuristic ghost1_next;
+
+      if (depth == 0) {
+         return new PointHeuristic(0);
+      } else {
+
+         next = pacCords.moveLeft();
+         if (canMoveLeft(pacCords.getX() * BLOCK_SIZE, pacCords.getY() * BLOCK_SIZE) && notGhost(next.getX(), next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            ghost0_next = min(next, gh_x0, gh_y0, 3);
+            ghost1_next = min(next, gh_x1, gh_y1, 3);
+            value = pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1) +
+                    max(next, new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()},
+                            new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()}, depth - 1).getValue();
+            pointHeuristics.add(new PointHeuristic(next, value));
+         }
+
+         next = pacCords.moveUp();
+         if (canMoveUp(pacCords.getX() * BLOCK_SIZE, pacCords.getY() * BLOCK_SIZE) && notGhost(next.getX(), next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            ghost0_next = min(next, gh_x0, gh_y0, 3);
+            ghost1_next = min(next, gh_x1, gh_y1, 3);
+            value = pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1) +
+                    max(next, new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()},
+                            new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()}, depth - 1).getValue();
+            pointHeuristics.add(new PointHeuristic(next, value));
+         }
+
+         next = pacCords.moveRight();
+         if (canMoveRight(pacCords.getX() * BLOCK_SIZE, pacCords.getY() * BLOCK_SIZE) && notGhost(next.getX(), next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            ghost0_next = min(next, gh_x0, gh_y0, 3);
+            ghost1_next = min(next, gh_x1, gh_y1, 3);
+            value = pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1) +
+                    max(next, new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()},
+                            new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()}, depth - 1).getValue();
+            pointHeuristics.add(new PointHeuristic(next, value));
+         }
+
+         next = pacCords.moveDown();
+         if (canMoveDown(pacCords.getX() * BLOCK_SIZE, pacCords.getY() * BLOCK_SIZE) && notGhost(next.getX(), next.getY())) {
+            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
+            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
+            ghost0_next = min(next, gh_x0, gh_y0, 3);
+            ghost1_next = min(next, gh_x1, gh_y1, 3);
+            value = pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1) +
+                    max(next, new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()},
+                            new int[]{ghost0_next.getP().getX(), ghost1_next.getP().getX()}, depth - 1).getValue();
+            pointHeuristics.add(new PointHeuristic(next, value));
+         }
+
+         Collections.sort(pointHeuristics, Collections.reverseOrder());
+
+         return pointHeuristics.get(0);
+      }
    }
 
    private void movePacman() {
 
-      MyPoint crt;
-      MyPoint next;
+      MyPoint crt, next, moveTo;
       int distTo0, distTo1;
       List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
       int gh_x0 = ghost_x[0];
@@ -363,62 +434,33 @@ public class Board extends JPanel implements ActionListener {
       distTo1 = manhattanDistance(crt.getX(), crt.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
 //якщо манхетенська відстань більше 10, то можемо не звертати уваги
       //пошук в глибину з заглибленням на 5 кроків
-      if (distTo0 > 7 && distTo1 > 7){
+
+      if (distTo0 > 10 && distTo1 > 10) {
          next = crt.moveLeft();
-         if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+         if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(), next.getY())) {
             pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
          }
 
          next = crt.moveUp();
-         if (canMoveUp(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+         if (canMoveUp(pacman_x, pacman_y) && notGhost(next.getX(), next.getY())) {
             pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
          }
 
          next = crt.moveRight();
-         if (canMoveRight(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+         if (canMoveRight(pacman_x, pacman_y) && notGhost(next.getX(), next.getY())) {
             pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
          }
 
          next = crt.moveDown();
-         if (canMoveDown(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
+         if (canMoveDown(pacman_x, pacman_y) && notGhost(next.getX(), next.getY())) {
             pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
          }
+
+         Collections.sort(pointHeuristics, Collections.reverseOrder());
+         moveTo = pointHeuristics.get(0).getP();
+      } else {
+         moveTo = max(crt, ghost_x, ghost_y, 3).getP();
       }
-
-      else{
-         next = crt.moveLeft();
-         if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
-            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
-         }
-
-         next = crt.moveUp();
-         if (canMoveUp(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
-            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
-         }
-
-         next = crt.moveRight();
-         if (canMoveRight(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
-            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
-         }
-
-         next = crt.moveDown();
-         if (canMoveDown(pacman_x, pacman_y) && notGhost(next.getX(),next.getY())) {
-            distTo0 = manhattanDistance(next.getX(), next.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
-            distTo1 = manhattanDistance(next.getX(), next.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-            pointHeuristics.add(new PointHeuristic(next, pointCost(next) + ((distTo0 < distTo1) ? distTo0 : distTo1)));
-         }
-      }
-
-      Collections.sort(pointHeuristics, Collections.reverseOrder());
-      System.out.println(pointHeuristics);
-
-      MyPoint moveTo = pointHeuristics.get(0).getP();
 
       moveTo(moveTo.getX(), moveTo.getY(), moveTo.getD());
 
@@ -504,9 +546,9 @@ public class Board extends JPanel implements ActionListener {
       return ((ch & 8) == 0);
    }
 
-   private boolean notGhost(int cord_x, int cord_y){
-      for(int i=0; i < ghost_x.length; i++){
-         if(cord_x==ghost_x[i] && cord_y==ghost_y[i]){
+   private boolean notGhost(int cord_x, int cord_y) {
+      for (int i = 0; i < ghost_x.length; i++) {
+         if (cord_x == ghost_x[i] && cord_y == ghost_y[i]) {
             return false;
          }
       }
@@ -527,10 +569,8 @@ public class Board extends JPanel implements ActionListener {
    }
 
    private void drawGhosts(Graphics2D g2d) {
-
-      for (int i = 0; i < ghost_x.length; i++) {
-         g2d.drawImage(ghost, ghost_x[i] + 1, ghost_y[i] + 1, this);
-      }
+      g2d.drawImage(ghost, ghost_x[0] - 3, ghost_y[0] - 3, this);
+      g2d.drawImage(ghost, ghost_x[1] + 3, ghost_y[1] + 3, this);
    }
 
    private void drawPacmanUp(Graphics2D g2d) {
@@ -726,41 +766,42 @@ public class Board extends JPanel implements ActionListener {
       g2d.dispose();
    }
 
-   class TAdapter extends KeyAdapter {
+class TAdapter extends KeyAdapter {
 
-      @Override
-      public void keyPressed(KeyEvent e) {
+   @Override
+   public void keyPressed(KeyEvent e) {
 
-         int key = e.getKeyCode();
+      int key = e.getKeyCode();
 
-         if (inGame) {
-            if (key == KeyEvent.VK_SPACE) {
-               if (step % 2 == 0) {
-                  movePacman();
-               } else {
-                  moveGhosts();
-               }
-            } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
-               inGame = false;
+      if (inGame) {
+         if (key == KeyEvent.VK_SPACE) {
+            if (step % 2 == 0) {
+               movePacman();
+            } else {
+               moveGhosts();
             }
-         } else {
-            if (key == 's' || key == 'S') {
-               inGame = true;
-               initGame();
-            }
+         } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
+            inGame = false;
          }
-      }
-
-      @Override
-      public void keyReleased(KeyEvent e) {
-
-         int key = e.getKeyCode();
-
-         if (key == Event.LEFT || key == Event.RIGHT
-                 || key == Event.UP || key == Event.DOWN) {
+      } else {
+         if (key == 's' || key == 'S') {
+            inGame = true;
+            initGame();
          }
       }
    }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+
+      int key = e.getKeyCode();
+
+      if (key == Event.LEFT || key == Event.RIGHT
+              || key == Event.UP || key == Event.DOWN) {
+      }
+   }
+
+}
 
    @Override
    public void actionPerformed(ActionEvent e) {
