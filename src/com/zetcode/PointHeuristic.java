@@ -18,9 +18,6 @@ public class PointHeuristic implements Comparable<PointHeuristic>{
         this.value = value;
     }
 
-    public PointHeuristic(){
-    }
-
     public PointHeuristic(Integer value){
         this.value = value;
     }

@@ -3,7 +3,6 @@ package com.zetcode;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -23,14 +22,13 @@ import javax.swing.Timer;
 public class Board extends JPanel implements ActionListener {
 
     private Dimension d;
-    private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
+    private final Font smallFont = new Font("Helvetica", Font.BOLD, 20);
 
     private Image ii;
     private final Color dotColor = new Color(192, 192, 0);
     private Color mazeColor;
 
     private boolean inGame = false;
-    private boolean dying = false;
     int step = 1;
 
     private final int BLOCK_SIZE = 24;
@@ -43,8 +41,6 @@ public class Board extends JPanel implements ActionListener {
     private int pacAnimDir = 1;
     private int pacmanAnimPos = 0;
     private int score;
-    private String gameover;
-    private int[] dx, dy;
     private int[] ghost_x, ghost_y;
 
     private Image ghost;
@@ -55,6 +51,7 @@ public class Board extends JPanel implements ActionListener {
     private int pacman_x, pacman_y;
     private int view_dx, view_dy;
 
+
     private final short levelData[][] = {
             {3, 10, 10, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10, 6},
             {5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5},
@@ -64,32 +61,14 @@ public class Board extends JPanel implements ActionListener {
             {1, 0, 0, 0, 0, 0, 4, 0, 1, 0, 4, 0, 0, 0, 5},
             {9, 0, 8, 0, 8, 8, 12, 0, 9, 8, 8, 6, 0, 0, 5},
             {0, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5},
-            {0, 5, 0, 1, 2, 2, 6, 0, 3, 10, 10, 8, 6, 8, 5},
-            {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 1, 0, 4},
+            {0, 5, 0, 1, 2, 2, 6, 0, 3, 10, 10, 8, 6, 0, 5},
+            {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 1, 2, 4},
             {0, 5, 0, 1, 0, 0, 4, 0, 5, 0, 0, 0, 1, 0, 4},
             {0, 5, 0, 9, 0, 0, 8, 10, 12, 0, 0, 0, 1, 0, 4},
             {0, 5, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 1, 0, 4},
             {0, 9, 10, 10, 8, 8, 10, 10, 10, 10, 6, 0, 1, 0, 4},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 10, 8, 8, 12}
     };
-
-//   private final short levelData[][] = {
-//           {3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-//           {9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 12}
-//   };
 
     private final short blocksData[][] = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -108,28 +87,7 @@ public class Board extends JPanel implements ActionListener {
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1}
     };
-//private final short blocksData[][] = {
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-//};
 
-    private final int validSpeeds[] = {1, 2, 3, 4, 6, 8};
-    private final int maxSpeed = 6;
-
-    private int currentSpeed = 3;
     private short[][] screenData;
     private Timer timer;
 
@@ -156,14 +114,11 @@ public class Board extends JPanel implements ActionListener {
         ghost_x = new int[2];
         ghost_y = new int[2];
 
-        ghost_x[0] = 24 * 8;
-        ghost_y[0] = 24 * 6;
+        ghost_x[0] = BLOCK_SIZE * 8;
+        ghost_y[0] = BLOCK_SIZE * 6;
 
-        ghost_x[1] = 24 * 6;
-        ghost_y[1] = 24 * 8;
-
-        dx = new int[4];
-        dy = new int[4];
+        ghost_x[1] = BLOCK_SIZE * 6;
+        ghost_y[1] = BLOCK_SIZE * 8;
 
         for (int x = 0; x < 15; x++) {
             for (int y = 0; y < 15; y++) {
@@ -180,7 +135,6 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void addNotify() {
         super.addNotify();
-
         initGame();
     }
 
@@ -200,6 +154,15 @@ public class Board extends JPanel implements ActionListener {
 
     private void playGame(Graphics2D g2d) {
 
+        inGame = false;
+        for (short i = 0; i < 15; i++) {
+            for (short j = 0; j < 15; j++) {
+                if ((screenData[i][j] & 16) != 0) {
+                    inGame = true;
+                }
+            }
+        }
+
         for (int i = 0; i < ghost_x.length; i++) {
             if (pacman_x == ghost_x[i] && pacman_y == ghost_y[i]) {
                 inGame = false;
@@ -208,24 +171,25 @@ public class Board extends JPanel implements ActionListener {
 
         drawPacman(g2d);
         drawGhosts(g2d);
-        drawInfo(g2d);
-        checkMaze();
     }
 
     private void showIntroScreen(Graphics2D g2d) {
 
         g2d.setColor(new Color(0, 32, 48));
-        g2d.fillRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
+        g2d.fillRect(50, SCREEN_SIZE / 2 - 60, SCREEN_SIZE - 100, 80);
         g2d.setColor(Color.white);
-        g2d.drawRect(50, SCREEN_SIZE / 2 - 30, SCREEN_SIZE - 100, 50);
+        g2d.drawRect(50, SCREEN_SIZE / 2 - 60, SCREEN_SIZE - 100, 80);
 
-        String s = "Press s to start.";
+        String s = "Press S to start";
+        String s2 = "Space to move";
+
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
 
         g2d.setColor(Color.white);
         g2d.setFont(small);
-        g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2);
+        g2d.drawString(s, (SCREEN_SIZE - metr.stringWidth(s)) / 2, SCREEN_SIZE / 2 - metr.getHeight()/2*3);
+        g2d.drawString(s2, (SCREEN_SIZE - metr.stringWidth(s2)) / 2, SCREEN_SIZE / 2);
     }
 
     private void drawScore(Graphics2D g) {
@@ -233,41 +197,7 @@ public class Board extends JPanel implements ActionListener {
         g.setFont(smallFont);
         g.setColor(new Color(96, 128, 255));
         s = "Score: " + score;
-        g.drawString(s, SCREEN_SIZE / 2 + 30, SCREEN_SIZE + 16);
-    }
-
-    private void drawInfo(Graphics2D g) {
-        g.setFont(smallFont);
-        g.setColor(new Color(96, 128, 255));
-        gameover = "";
-        g.drawString(gameover, SCREEN_SIZE / 2 + 96, SCREEN_SIZE + 16);
-    }
-
-    private void checkMaze() {
-
-        boolean notFinished = true;
-
-        while (notFinished) {
-
-            for (short i = 0; i < 15; i++) {
-                for (short j = 0; j < 15; j++) {
-                    if ((screenData[i][j] & 16) != 0) {
-                        notFinished = false;
-                    }
-                }
-            }
-        }
-
-        if (notFinished) {
-
-            score += 50;
-
-            if (currentSpeed < maxSpeed) {
-                currentSpeed++;
-            }
-
-            initLevel();
-        }
+        g.drawString(s, SCREEN_SIZE / 2 - 150, SCREEN_SIZE + 5);
     }
 
     private int manhattanDistance(int x1, int y1, int x2, int y2) {
@@ -277,7 +207,6 @@ public class Board extends JPanel implements ActionListener {
     private int pointCost(MyPoint p) {
 
         short ch = screenData[p.getY()][p.getX()];
-
         if ((ch & 16) != 0) {
             return 3;
         }
@@ -287,13 +216,10 @@ public class Board extends JPanel implements ActionListener {
 
     private void moveGhosts() {
 
-        MyPoint pacCords = new MyPoint(pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE, MyPoint.Direction.STILL);
-
         PointHeuristic[] next = min(pacman_x / BLOCK_SIZE, pacman_y / BLOCK_SIZE, ghost_x, ghost_y, 3);
-
         for (int i = 0; i < ghost_x.length; i++) {
-            ghost_x[i] = next[i].getP().getX() * 24;
-            ghost_y[i] = next[i].getP().getY() * 24;
+            ghost_x[i] = next[i].getP().getX() * BLOCK_SIZE;
+            ghost_y[i] = next[i].getP().getY() * BLOCK_SIZE;
         }
         step++;
     }
@@ -302,7 +228,6 @@ public class Board extends JPanel implements ActionListener {
         MyPoint crt;
         MyPoint next;
         int value;
-        PointHeuristic[] nextLocations;
         PointHeuristic[] res = new PointHeuristic[ghost_x.length];
 
         List<PointHeuristic> pointHeuristics = new ArrayList<PointHeuristic>();
@@ -323,9 +248,7 @@ public class Board extends JPanel implements ActionListener {
                 if (canMoveLeft(ghost_x[i], ghost_y[i])) {
                     ghost_x_next[i] = next.getX() * BLOCK_SIZE;
                     ghost_y_next[i] = next.getY() * BLOCK_SIZE;
-//               nextLocations = min(max(pacCords,ghost_x_next, ghost_y_next, 1).getP(), ghost_x_next, ghost_y_next, depth - 1);
                     value = manhattanDistance(next.getX(), next.getY(), pacX, pacY);
-//                       + nextLocations[i].getValue();
                     pointHeuristics.add(new PointHeuristic(next, value));
                 }
 
@@ -333,9 +256,7 @@ public class Board extends JPanel implements ActionListener {
                 if (canMoveUp(ghost_x[i], ghost_y[i])) {
                     ghost_x_next[i] = next.getX() * BLOCK_SIZE;
                     ghost_y_next[i] = next.getY() * BLOCK_SIZE;
-//               nextLocations = min(max(pacCords,ghost_x_next, ghost_y_next, 1).getP(), ghost_x_next, ghost_y_next, depth - 1);
                     value = manhattanDistance(next.getX(), next.getY(), pacX, pacY);
-//                       + nextLocations[i].getValue();
                     pointHeuristics.add(new PointHeuristic(next, value));
                 }
 
@@ -343,9 +264,7 @@ public class Board extends JPanel implements ActionListener {
                 if (canMoveRight(ghost_x[i], ghost_y[i])) {
                     ghost_x_next[i] = next.getX() * BLOCK_SIZE;
                     ghost_y_next[i] = next.getY() * BLOCK_SIZE;
-//               nextLocations = min(max(pacCords,ghost_x_next, ghost_y_next, 1).getP(), ghost_x_next, ghost_y_next, depth - 1);
                     value = manhattanDistance(next.getX(), next.getY(), pacX, pacY);
-//                       + nextLocations[i].getValue();
                     pointHeuristics.add(new PointHeuristic(next, value));
                 }
 
@@ -353,9 +272,7 @@ public class Board extends JPanel implements ActionListener {
                 if (canMoveDown(ghost_x[i], ghost_y[i])) {
                     ghost_x_next[i] = next.getX() * BLOCK_SIZE;
                     ghost_y_next[i] = next.getY() * BLOCK_SIZE;
-//               nextLocations = min(max(pacCords,ghost_x_next, ghost_y_next, 1).getP(), ghost_x_next, ghost_y_next, depth - 1);
                     value = manhattanDistance(next.getX(), next.getY(), pacX, pacY);
-//                       + nextLocations[i].getValue();
                     pointHeuristics.add(new PointHeuristic(next, value));
                 }
 
@@ -370,7 +287,6 @@ public class Board extends JPanel implements ActionListener {
         }
         return res;
     }
-//returns best Ghost coordinates
 
     private PointHeuristic max(MyPoint pacCords, int[] ghost_x, int[] ghost_y, int depth) {
 
@@ -387,8 +303,6 @@ public class Board extends JPanel implements ActionListener {
         if (depth == 0) {
             return new PointHeuristic(0);
         } else {
-
-//            pointHeuristics.add(new PointHeuristic(pacCords,0));
 
             next = pacCords.moveLeft();
             if (canMoveLeft(pacCords.getX() * BLOCK_SIZE, pacCords.getY() * BLOCK_SIZE) && notGhost(next.getX(), next.getY())) {
@@ -474,10 +388,8 @@ public class Board extends JPanel implements ActionListener {
 
         distTo0 = manhattanDistance(crt.getX(), crt.getY(), gh_x0 / BLOCK_SIZE, gh_y0 / BLOCK_SIZE);
         distTo1 = manhattanDistance(crt.getX(), crt.getY(), gh_x1 / BLOCK_SIZE, gh_y1 / BLOCK_SIZE);
-//якщо манхетенська відстань більше 10, то можемо не звертати уваги
-        //пошук в глибину з заглибленням на 5 кроків
 
-        if (distTo0 > 10 && distTo1 > 10) {
+        if (distTo0 > 6 && distTo1 > 6) {
             next = crt.moveLeft();
             if (canMoveLeft(pacman_x, pacman_y) && notGhost(next.getX(), next.getY())) {
                 pointHeuristics.add(new PointHeuristic(next, pointCost(next)));
@@ -527,8 +439,8 @@ public class Board extends JPanel implements ActionListener {
                 view_dy = 1;
                 break;
         }
-        pacman_x = 24 * x;
-        pacman_y = 24 * y;
+        pacman_x = BLOCK_SIZE * x;
+        pacman_y = BLOCK_SIZE * y;
 
     }
 
@@ -732,10 +644,8 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void initGame() {
-
         score = 0;
         initLevel();
-        currentSpeed = 3;
     }
 
     private void initLevel() {
@@ -749,11 +659,12 @@ public class Board extends JPanel implements ActionListener {
 
     private void continueLevel() {
 
-        ghost_x[0] = 24 * 8;
-        ghost_y[0] = 24 * 6;
+        ghost_x[0] = BLOCK_SIZE * 8;
+        ghost_y[0] = BLOCK_SIZE * 6;
 
-        ghost_x[1] = 24 * 6;
-        ghost_y[1] = 24 * 8;
+        ghost_x[1] = BLOCK_SIZE * 6;
+        ghost_y[1] = BLOCK_SIZE * 8;
+
         pacman_x = 0;
         pacman_y = 0;
         view_dx = -1;
@@ -793,7 +704,6 @@ public class Board extends JPanel implements ActionListener {
         g2d.fillRect(0, 0, d.width, d.height);
 
         drawMaze(g2d);
-        drawInfo(g2d);
         drawScore(g2d);
         doAnim();
 
@@ -833,21 +743,10 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-            int key = e.getKeyCode();
-
-            if (key == Event.LEFT || key == Event.RIGHT
-                    || key == Event.UP || key == Event.DOWN) {
-            }
-        }
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         repaint();
     }
 
